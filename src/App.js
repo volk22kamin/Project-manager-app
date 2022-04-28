@@ -1,24 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import TaskColumn from "./components/pages/projectOverview/TaskCoulmn";
+import ProjectWrapper from "./components/projectWrapper/ProjectWrapper";
+import Navbar from "./components/navbar/Navbar";
+import "./App.css";
+import { Fragment } from "react";
+import SearchBar from "./components/navbar/searchBar/SearchBar";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Fragment>
+      <SearchBar />
+      <Navbar />
+      <ProjectWrapper projectName="project a">
+        <TaskColumn header="To do" />
+        <TaskColumn header="In progress" />
+        <TaskColumn header="Code review" />
+        <TaskColumn header="Done" />
+      </ProjectWrapper>
+    </Fragment>
   );
 }
 

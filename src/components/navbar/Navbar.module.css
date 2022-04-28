@@ -1,0 +1,9 @@
+.navbar {
+  display: flex;
+  width: 100%;
+  background-color: rgba(120, 188, 227, 0.864);
+  justify-content: space-around;
+}
+.logo {
+  cursor: pointer;
+}

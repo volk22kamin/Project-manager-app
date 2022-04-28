@@ -1,0 +1,19 @@
+.column {
+  width: 22%;
+  border: 1px solid rgba(128, 128, 128, 0.744);
+  border-radius: 7px;
+}
+
+.header {
+  /* width: 100%; */
+  background-color: rgba(128, 128, 128, 0.738);
+  color: white;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+  padding: 7px;
+  font-size: 24px;
+}
+.column-body {
+  background-color: rgba(128, 128, 128, 0.247);
+  min-height: 500px;
+}
