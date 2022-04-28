@@ -1,9 +1,21 @@
 .navbar {
   display: flex;
-  width: 100%;
+  /* width: 100%; */
   background-color: rgba(120, 188, 227, 0.864);
-  justify-content: space-around;
+  justify-content: space-between;
+  padding-left: 20px;
+  padding-right: 20px;
 }
-.logo {
+
+.myTasks:hover {
   cursor: pointer;
+}
+.logoContainer {
+  display: flex;
+  width: 15%;
+  justify-content: space-around;
+  cursor: pointer;
+}
+.logoContainer img {
+  height: 70px;
 }

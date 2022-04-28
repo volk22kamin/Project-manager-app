@@ -3,19 +3,45 @@ import ProjectWrapper from "./components/projectWrapper/ProjectWrapper";
 import Navbar from "./components/navbar/Navbar";
 import "./App.css";
 import { Fragment } from "react";
-import SearchBar from "./components/navbar/searchBar/SearchBar";
+
+import logo from "./testProfile.jpg";
+import { useState } from "react";
+import LoginPage from "./components/pages/loginPage/LoginPage";
 
 function App() {
+  const [isLoggedIn, setIsLoggenIn] = useState(false);
+  const todoTasks = [
+    {
+      id: 1,
+      description: "make the navbar",
+      assignee: logo,
+    },
+    {
+      id: 2,
+      description: "make Profile page",
+      assignee: logo,
+    },
+    {
+      id: 3,
+      description: "make Button component",
+      assignee: logo,
+    },
+  ];
+
   return (
     <Fragment>
-      <SearchBar />
-      <Navbar />
-      <ProjectWrapper projectName="project a">
-        <TaskColumn header="To do" />
-        <TaskColumn header="In progress" />
-        <TaskColumn header="Code review" />
-        <TaskColumn header="Done" />
-      </ProjectWrapper>
+      <LoginPage />
+      {isLoggedIn && (
+        <div>
+          <Navbar />
+          <ProjectWrapper projectName="Scooby Doo this shit">
+            <TaskColumn tasks={todoTasks} header="To do" />
+            <TaskColumn tasks={todoTasks} header="In progress" />
+            <TaskColumn tasks={todoTasks} header="Code review" />
+            <TaskColumn tasks={todoTasks} header="Done" />
+          </ProjectWrapper>
+        </div>
+      )}
     </Fragment>
   );
 }

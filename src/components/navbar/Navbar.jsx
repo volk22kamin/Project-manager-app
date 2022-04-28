@@ -2,21 +2,28 @@ import ProfileIcon from "./profileIcon/ProfileIcon";
 import classes from "./Navbar.module.css";
 // for now dummy icon
 import profileIcon from "../../testProfile.jpg";
+import logo from "../../logo.png";
+import SearchBar from "./searchBar/SearchBar";
 
+// gets props from app
 const Navbar = (props) => {
   const onLogoClickHandler = () => {
     console.log("logo clicked");
   };
+  const onMyTaskClickHandler = () => {
+    console.log("myTask clicked");
+  };
 
   return (
     <div className={classes.navbar}>
-      <h2 className={classes.logo} onClick={onLogoClickHandler}>
-        Project manager
-      </h2>
-      <a className={classes.myTasks} href="my tasks">
+      <div className={classes.logoContainer} onClick={onLogoClickHandler}>
+        <img src={logo} alt="" />
+        <h2 className={classes.logo}>Promger</h2>
+      </div>
+      <h2 className={classes.myTasks} onClick={onMyTaskClickHandler}>
         My tasks
-      </a>
-      <h2 className={classes.searchBar}>Search</h2>
+      </h2>
+      <SearchBar />
       <ProfileIcon imageSrc={profileIcon} className={classes.profile}>
         Profile
       </ProfileIcon>

@@ -1,4 +1,13 @@
+.container {
+  display: flex;
+  align-items: center;
+}
 .searchBar {
   border: none;
   padding: 10px;
+  width: 250px;
+  border-radius: 7px;
+}
+.searchBar:focus {
+  outline: none;
 }

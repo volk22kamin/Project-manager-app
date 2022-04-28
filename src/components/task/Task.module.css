@@ -1,0 +1,17 @@
+.taskContainer {
+  box-shadow: 5px 3px 14px 3px #888888;
+  border-radius: 7px;
+  margin-top: 10px;
+  border: none;
+  background-color: #c1d1ee;
+  width: 95%;
+}
+.text {
+  padding-left: 10px;
+  font-weight: bold;
+}
+.footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+}
