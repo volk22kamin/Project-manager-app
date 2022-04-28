@@ -7,7 +7,8 @@ import SearchBar from "./searchBar/SearchBar";
 
 // gets props from app
 const Navbar = (props) => {
-  const onLogoClickHandler = () => {
+
+    const onLogoClickHandler = () => {
     console.log("logo clicked");
   };
   const onMyTaskClickHandler = () => {
