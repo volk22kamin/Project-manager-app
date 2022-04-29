@@ -1,8 +1,11 @@
 import classes from "./TaskColumn.module.css";
 import Task from "../../task/Task";
-import Button from "../../button/Button";
 // gets props from app
 const TaskColumn = (props) => {
+  console.log("task column", props.tasks);
+  const onTaskUpdateHandler = (id) => {
+    props.onUpdate(id);
+  };
   const createIssueHandler = () => {
     props.openCreateIssueModal();
   };
@@ -18,6 +21,7 @@ const TaskColumn = (props) => {
         {props.tasks.map((task) => {
           return (
             <Task
+              onUpdate={onTaskUpdateHandler}
               key={task.id}
               taskText={task.description}
               taskNumber={task.id}

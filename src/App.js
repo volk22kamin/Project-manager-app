@@ -1,32 +1,12 @@
+import { useState } from "react";
+import { Fragment } from "react";
 import Navbar from "./components/navbar/Navbar";
+import ProjectOverview from "./components/pages/projectOverview/ProjectOverview";
 
 import "./App.css";
 
-import logo from "./testProfile.jpg";
-import { Fragment } from "react";
-import { useState } from "react";
-import ProjectOverview from "./components/pages/projectOverview/ProjectOverview";
-
 function App() {
   const [isLoggedIn, setIsLoggenIn] = useState(false);
-
-  const todoTasks = [
-    {
-      id: 1,
-      description: "make the navbar",
-      assignee: logo,
-    },
-    {
-      id: 2,
-      description: "make Profile page",
-      assignee: logo,
-    },
-    {
-      id: 3,
-      description: "make Button component",
-      assignee: logo,
-    },
-  ];
 
   return (
     <Fragment>
@@ -34,7 +14,7 @@ function App() {
       {!isLoggedIn && (
         <div>
           <Navbar />
-          <ProjectOverview todoTasks={todoTasks} />
+          <ProjectOverview />
         </div>
       )}
     </Fragment>

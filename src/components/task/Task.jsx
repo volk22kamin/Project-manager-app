@@ -4,8 +4,13 @@ import classes from "./Task.module.css";
 
 // for now gets the props from taskColumn
 const Task = (props) => {
+  const onTaskClickHandler = () => {
+    console.log(props.taskNumber);
+    props.onUpdate(props.taskNumber);
+  };
+
   return (
-    <div className={classes.taskContainer}>
+    <div onClick={onTaskClickHandler} className={classes.taskContainer}>
       <p className={classes.text}>{props.taskText}</p>
       <footer className={classes.footer}>
         <Tag innerTag={props.taskNumber} />
