@@ -5,7 +5,7 @@ import InputWrap from "./InputWrap";
 const InputForm = (props) => {
   return (
     <InputWrap>
-      <form>
+      <form className={classes.form}>
         <div className={classes.inputForm}>
           {props.name && (
             <div className={classes.item}>

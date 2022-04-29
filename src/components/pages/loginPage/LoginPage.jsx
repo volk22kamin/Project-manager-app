@@ -8,6 +8,7 @@ const LoginPage = (props) => {
       <Card>
         <InputForm name={"s"} confirm={"s"} action="Register" />
       </Card>
+      <div className={classes.divider}></div>
       <Card>
         <InputForm action="Log-in" />
       </Card>

@@ -19,7 +19,7 @@
   align-items: center;
   justify-content: space-around;
 }
-form {
+.form {
   height: 95%;
   width: 95%;
   display: flex;
@@ -38,4 +38,9 @@ input {
   margin-top: 5px;
   border-radius: 7px;
   border: 1px solid rgba(128, 128, 128, 0.552);
+}
+.divider {
+  width: 0px;
+  height: 550px;
+  border: 1px solid #8e8585;
 }
