@@ -1,3 +1,15 @@
+.pointer {
+  width: 10px;
+  height: 10px;
+  background-color: aliceblue;
+  transform: rotate(45deg);
+  z-index: 100;
+  top: 54px;
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  position: absolute;
+  right: 32px;
+}
 .overlay {
   position: fixed;
   top: 0;
@@ -8,9 +20,10 @@
   /* background-color: rgba(0, 0, 0, 0.75); */
 }
 .wrapBox {
+  z-index: 30;
   position: fixed;
   right: 7px;
-  top: 45px;
+  top: 50px;
   border-radius: 7px;
   width: 265px;
   height: 322px;
