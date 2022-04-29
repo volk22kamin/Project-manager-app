@@ -12,6 +12,14 @@
   border-top-right-radius: 7px;
   padding: 7px;
   font-size: 24px;
+  display: flex;
+  justify-content: space-between;
+}
+.header button {
+  background: none;
+  font-size: 24px;
+  border: none;
+  cursor: pointer;
 }
 .column-body {
   background-color: rgba(128, 128, 128, 0.247);
