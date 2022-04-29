@@ -14,6 +14,7 @@ import ProjectOverview from "./components/pages/projectOverview/ProjectOverview"
 function App() {
   const [isLoggedIn, setIsLoggenIn] = useState(false);
 
+
   const todoTasks = [
     {
       id: 1,
@@ -39,6 +40,7 @@ function App() {
         <div>
           <Navbar />
           <ProjectOverview todoTasks={todoTasks} />
+
         </div>
       )}
     </Fragment>
