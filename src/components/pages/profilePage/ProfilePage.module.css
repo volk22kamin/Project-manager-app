@@ -1,23 +1,32 @@
-.body {
-  background-color: rgba(168, 127, 127, 0.4);
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 20;
+  /* background-color: rgba(0, 0, 0, 0.75); */
 }
 .wrapBox {
-    border-radius: 7px;
-    width: 450px;
-    height: 450px;
-    border: 1px solid rgba(0, 0, 0, 0.645);
-    background-color: aliceblue;
-    box-shadow: 0px -3px 14px 4px rgb(0 0 0 / 40%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    margin-top: 10px;
-  }
+  position: fixed;
+  right: 7px;
+  top: 45px;
+  border-radius: 7px;
+  width: 265px;
+  height: 322px;
+  border: 1px solid rgba(0, 0, 0, 0.645);
+  background-color: aliceblue;
+  box-shadow: 0px -3px 14px 4px rgb(0 0 0 / 40%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 10px;
+}
 
-  .username { 
-      color : blue;
-  }
-  .email { 
-    font-weight: bold;
-    }
+.username {
+  color: blue;
+}
+.email {
+  font-weight: bold;
+}
