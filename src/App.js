@@ -1,8 +1,4 @@
-import TaskColumn from "./components/pages/projectOverview/TaskCoulmn";
-import ProjectWrapper from "./components/projectWrapper/ProjectWrapper";
 import Navbar from "./components/navbar/Navbar";
-import LoginPage from "./components/pages/loginPage/LoginPage";
-import CreateIssue from "./components/createIssue/CreateIssue";
 
 import "./App.css";
 
@@ -13,7 +9,6 @@ import ProjectOverview from "./components/pages/projectOverview/ProjectOverview"
 
 function App() {
   const [isLoggedIn, setIsLoggenIn] = useState(false);
-
 
   const todoTasks = [
     {
@@ -40,7 +35,6 @@ function App() {
         <div>
           <Navbar />
           <ProjectOverview todoTasks={todoTasks} />
-
         </div>
       )}
     </Fragment>
