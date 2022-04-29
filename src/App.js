@@ -7,9 +7,11 @@ import { Fragment } from "react";
 import logo from "./testProfile.jpg";
 import { useState } from "react";
 import LoginPage from "./components/pages/loginPage/LoginPage";
+import ProfilePage from "./components/pages/profilePage/ProfilePage";
 
 function App() {
   const [isLoggedIn, setIsLoggenIn] = useState(false);
+  // const [isProfileClicked, setProfilePopUp] = useState(false);
   const todoTasks = [
     {
       id: 1,
@@ -30,10 +32,11 @@ function App() {
 
   return (
     <Fragment>
-      <LoginPage />
+      {/* <ProfilePage trigger = {isProfileClicked} username = "Mike" email = "mike@gmail.com" imageSrc ={logo}/> */}
+      <LoginPage  />
       {isLoggedIn && (
         <div>
-          <Navbar />
+          <Navbar/>
           <ProjectWrapper projectName="Scooby Doo this shit">
             <TaskColumn tasks={todoTasks} header="To do" />
             <TaskColumn tasks={todoTasks} header="In progress" />
