@@ -1,36 +1,32 @@
 import { useState, useContext } from "react";
 import { Fragment } from "react";
 
-import taskData from "../../../context/dummyDataContext";
+import TaskData from "../../../context/dummyDataContext";
 
 import CreateIssue from "../../createIssue/CreateIssue";
 import ProjectWrapper from "../../projectWrapper/ProjectWrapper";
 import TaskColumn from "./TaskCoulmn";
 
 const ProjectOverview = (props) => {
-  const taskDataCtx = useContext(taskData);
+  const TaskDataCtx = useContext(TaskData);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  // let inProgress = taskDataCtx.inProgress;
-  const [todoTasks, setTodoTasks] = useState(taskDataCtx.todoTasks);
-  const [codeReview, setCodeReview] = useState(taskDataCtx.codeReview);
-  const [done, setDone] = useState(taskDataCtx.done);
-  const [inProgress, setInProgress] = useState(taskDataCtx.inProgress);
+  const [todoTasks, setTodoTasks] = useState(TaskDataCtx.todoTasks);
+  const [codeReview, setCodeReview] = useState(TaskDataCtx.codeReview);
+  const [done, setDone] = useState(TaskDataCtx.done);
+  const [inProgress, setInProgress] = useState(TaskDataCtx.inProgress);
 
-  console.log("inporgreess", inProgress);
-  console.log("inporgreess", codeReview);
-  console.log("inporgreess", done);
-  console.log("todo tasks", todoTasks);
-  // console.log("inporgreess2", taskDataCtx.inProgress);
+  // console.log("inporgreess2", TaskDataCtx.inProgress);
 
   const onTaskUpdateHandler = (id) => {
-    console.log("pro", id);
     setInProgress(() => [
       ...inProgress,
       todoTasks[todoTasks.findIndex((task) => task.id === id)],
     ]);
+  };
 
-    console.log(inProgress);
+  const onCreateIssue = (task) => {
+    setTodoTasks(() => [...todoTasks, task]);
   };
 
   const onCloseModalHandler = () => {
@@ -42,7 +38,12 @@ const ProjectOverview = (props) => {
   };
   return (
     <Fragment>
-      {modalIsOpen && <CreateIssue onCloseModal={onCloseModalHandler} />}
+      {modalIsOpen && (
+        <CreateIssue
+          onCreateIssue={onCreateIssue}
+          onCloseModal={onCloseModalHandler}
+        />
+      )}
 
       <ProjectWrapper projectName="Scooby Doo this shit">
         <TaskColumn

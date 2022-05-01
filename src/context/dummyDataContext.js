@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "../testProfile.jpg";
 
-const taskData = React.createContext({
+const TaskData = React.createContext({
   todoTasks: [
     {
       id: 1,
@@ -30,4 +30,4 @@ const taskData = React.createContext({
   done: [],
 });
 
-export default taskData;
+export default TaskData;
