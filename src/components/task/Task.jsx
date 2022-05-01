@@ -1,11 +1,16 @@
 import ProfileIcon from "../navbar/profileIcon/ProfileIcon";
 import Tag from "../tag/Tag";
 import classes from "./Task.module.css";
+import Modal from "../modal/Modal";
 
 // for now gets the props from taskColumn
 const Task = (props) => {
+  const onTaskClickHandler = () => {
+    props.onUpdate(props.taskNumber);
+  };
+
   return (
-    <div className={classes.taskContainer}>
+    <div onClick={onTaskClickHandler} className={classes.taskContainer}>
       <p className={classes.text}>{props.taskText}</p>
       <footer className={classes.footer}>
         <Tag innerTag={props.taskNumber} />

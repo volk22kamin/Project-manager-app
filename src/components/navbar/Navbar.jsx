@@ -23,13 +23,17 @@ const Navbar = (props) => {
         <img src={logo} alt="" />
         <h2 className={classes.logo}>Promger</h2>
       </div>
-      <h2 className={classes.myTasks} onClick={onMyTaskClickHandler}>
-        My tasks
-      </h2>
-      <SearchBar />
-      <ProfileIcon imageSrc={profileIcon} className={classes.profile}>
-        Profile
-      </ProfileIcon>
+      {props.loggedIn === true && (
+        <h2 className={classes.myTasks} onClick={onMyTaskClickHandler}>
+          My tasks
+        </h2>
+      )}
+      {props.loggedIn === true && <SearchBar />}
+      {props.loggedIn === true && (
+        <ProfileIcon imageSrc={profileIcon} className={classes.profile}>
+          Profile
+        </ProfileIcon>
+      )}
     </div>
   );
 };
