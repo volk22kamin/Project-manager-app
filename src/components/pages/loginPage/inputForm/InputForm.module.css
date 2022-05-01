@@ -27,7 +27,7 @@
   align-items: center;
   justify-content: space-between;
 }
-.item {
+.label {
   width: 97%;
   padding: 15px;
   display: flex;
