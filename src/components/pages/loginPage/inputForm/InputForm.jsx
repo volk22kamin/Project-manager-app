@@ -56,6 +56,7 @@ const InputForm = (props) => {
                 id="email"
                 ref={refEmail}
                 required
+                value={"vel@gmail.com"}
               />
             </label>
           </div>
@@ -68,6 +69,7 @@ const InputForm = (props) => {
                 id="password"
                 ref={refpassword}
                 required
+                value={"hsdlbkvhbdl"}
               />
             </label>
           </div>

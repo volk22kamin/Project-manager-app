@@ -1,14 +1,27 @@
 import classes from "./ProfileIcon.module.css";
 import ProfilePage from "../../pages/profilePage/ProfilePage";
 import logo from "../../../testProfile.jpg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const ProfileIcon = (props) => {
   const [showProfile, setShowProfile] = useState(false);
 
   const profileClickHandler = () => {
-    setShowProfile(true);
+    console.log("handler", showProfile);
+    if (showProfile === true) {
+      console.log("open");
+      return;
+    }
+    if (!showProfile) {
+      console.log("inseide", showProfile);
+      setShowProfile(() => true);
+      console.log("inseide2", showProfile);
+    }
   };
+
+  // useEffect(() => {
+  //   setShowProfile(false);
+  // }, []);
 
   const onCloseProfileHandler = () => {
     setShowProfile(false);

@@ -5,7 +5,8 @@ import Modal from "../modal/Modal";
 import Tag from "../tag/Tag";
 import Button from "../button/Button";
 
-let idNumber = 0;
+// for now starts with 5 becouse theres 4 dummy issues
+let idNumber = 4;
 
 // gets props from projectOverview
 // for now the id is local have to check if it wont restart every load
