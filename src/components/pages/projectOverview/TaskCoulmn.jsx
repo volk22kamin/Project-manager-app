@@ -1,11 +1,10 @@
 import classes from "./TaskColumn.module.css";
 import Task from "../../task/Task";
 
-import { useContext } from "react";
-import TaskData from "../../../context/dummyDataContext";
-
-// gets props from app
+let count = 1;
+// gets props from project overview
 const TaskColumn = (props) => {
+  // console.log("task column props.tasks count", count++, props.tasks);
   // const data = useContext(TaskData);
   // console.log(data);
 

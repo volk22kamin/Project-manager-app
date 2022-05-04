@@ -1,3 +1,4 @@
+import { split } from "lodash";
 import { useState, useContext } from "react";
 import { Fragment } from "react";
 
@@ -16,13 +17,16 @@ const ProjectOverview = (props) => {
   const [done, setDone] = useState(TaskDataCtx.done);
   const [inProgress, setInProgress] = useState(TaskDataCtx.inProgress);
 
-  // console.log("inporgreess2", TaskDataCtx.inProgress);
-
   const onTaskUpdateHandler = (id) => {
-    setInProgress(() => [
-      ...inProgress,
-      todoTasks[todoTasks.findIndex((task) => task.id === id)],
-    ]);
+    const taskToRemoveIndex = todoTasks.findIndex((task) => task.id === id);
+    if (taskToRemoveIndex >= 0) {
+      const temp = inProgress;
+      temp.push(todoTasks[taskToRemoveIndex]);
+      setInProgress(() => temp);
+      todoTasks.splice(taskToRemoveIndex, 1);
+      const filtered = todoTasks.filter((task) => task.id !== id);
+      setTodoTasks(filtered);
+    }
   };
 
   const onCreateIssue = (task) => {
