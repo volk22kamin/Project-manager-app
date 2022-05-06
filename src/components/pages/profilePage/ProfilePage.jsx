@@ -14,14 +14,13 @@ const ProfilePage = (props) => {
   const onCloseProfileHandler = () => {
     props.onCloseProfile();
   };
-  // change the profile logo componnete
   return (
     <ProfilePageWrap onCloseProfile={onCloseProfileHandler}>
       <img className={classes.profileImage} src={props.imageSrc} />
       <div className={classes.username}>{props.username}</div>
       <div className={classes.email}>{props.email}</div>
-      <Button innerText="My Tasks" onClick={onMyTasksClickHandler} />
-      <Button innerText="Log Out" onClick={onLogOutClickHandler} />
+      <Button onClick={onMyTasksClickHandler}>My tasks</Button>
+      <Button onClick={onLogOutClickHandler}>Log out</Button>
     </ProfilePageWrap>
   );
 };

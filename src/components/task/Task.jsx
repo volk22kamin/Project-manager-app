@@ -10,7 +10,10 @@ const Task = (props) => {
   };
 
   return (
-    <div onClick={onTaskClickHandler} className={classes.taskContainer}>
+    <div
+      onClick={props.onUpdate ? onTaskClickHandler : undefined}
+      className={classes.taskContainer}
+    >
       <p className={classes.text}>{props.taskText}</p>
       <footer className={classes.footer}>
         <Tag innerTag={props.taskNumber} />

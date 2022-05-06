@@ -1,13 +1,31 @@
 import Button from "../../../button/Button";
 import classes from "./InputForm.module.css";
 import InputWrap from "./InputWrap";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 const InputForm = (props) => {
-  const refEmail = useRef("");
+  const refEmail = useRef("vel@gmail.com");
   const refname = useRef("");
   const refconfirm = useRef("");
-  const refpassword = useRef("");
+  const refpassword = useRef("12315ds");
+
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const [email, setEmail] = useState("");
+
+  // const userNameChangeHandler = (event) => {
+  //   setUserName(event.target.value);
+  // };
+  // const emailChangeHandler = (event) => {
+  //   setEmail(event.target.value);
+  // };
+  // const passwordChangeHandler = (event) => {
+  //   setPassword(event.target.value);
+  // };
+  // const confirmChangeHandler = (event) => {
+  //   setConfirm(event.target.value);
+  // };
 
   const validateConfirmPassword = () => {
     if (!refconfirm.current.value) return true;
@@ -35,7 +53,7 @@ const InputForm = (props) => {
         <div className={classes.inputForm}>
           {props.name && (
             <div className={classes.item}>
-              <label className={classes.label}>
+              <label htmlFor="fullname" className={classes.label}>
                 Full name
                 <input
                   type="text"
@@ -43,6 +61,7 @@ const InputForm = (props) => {
                   id="fullName"
                   ref={refname}
                   required
+                  // onChange={userNameChangeHandler}
                 />
               </label>
             </div>
@@ -57,6 +76,7 @@ const InputForm = (props) => {
                 ref={refEmail}
                 required
                 value={"vel@gmail.com"}
+                // onChange={emailChangeHandler}
               />
             </label>
           </div>
@@ -69,7 +89,8 @@ const InputForm = (props) => {
                 id="password"
                 ref={refpassword}
                 required
-                value={"hsdlbkvhbdl"}
+                value={"hgsdvks"}
+                // onChange={passwordChangeHandler}
               />
             </label>
           </div>
@@ -89,7 +110,7 @@ const InputForm = (props) => {
           )}
         </div>
         <div className={classes.btn}>
-          <Button type="submit" innerText={props.action} />
+          <Button type="submit">{props.action}</Button>
         </div>
       </form>
     </InputWrap>
