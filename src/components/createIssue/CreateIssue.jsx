@@ -6,22 +6,31 @@ import Tag from "../tag/Tag";
 import Button from "../button/Button";
 
 // for now starts with 5 becouse theres 4 dummy issues
-let idNumber = 4;
+let idNumber = 6;
 
 // gets props from projectOverview
 // for now the id is local have to check if it wont restart every load
 const CreateIssue = (props) => {
-  const participantsNames = ["none", "velvel", "mike", "josh"];
+  // later this list should be passed via props
+  const participantsNames = [
+    "none@gmail.com",
+    "velvel@gmail.com",
+    "mike@gmail.com",
+    "josh@gmail.com",
+  ];
   const priorities = ["none", "epic", "high", "low"];
 
   const descriptionRef = useRef();
   const assigneeRef = useRef();
   const priortyRef = useRef();
+
   const taskInput_obj = {
-    description: "",
-    assignee: "",
-    priorty: "",
-    id: idNumber + 1,
+    text: "",
+    email: "",
+    priority: "",
+    status: "to do",
+    task_id: idNumber + 1,
+    project_id: 1,
   };
 
   const onCloseModalHandler = () => {
@@ -31,13 +40,12 @@ const CreateIssue = (props) => {
   const onSubmitHandler = (event) => {
     event.preventDefault();
     idNumber++;
-    taskInput_obj.description = descriptionRef.current.value;
-    taskInput_obj.assignee = assigneeRef.current.value;
-    taskInput_obj.priorty = priortyRef.current.value;
+    taskInput_obj.text = descriptionRef.current.value;
+    taskInput_obj.email = assigneeRef.current.value;
+    taskInput_obj.priority = priortyRef.current.value;
 
     props.onCreateIssue(taskInput_obj);
     props.onCloseModal();
-    console.log("obj", taskInput_obj);
   };
 
   return (
@@ -47,6 +55,7 @@ const CreateIssue = (props) => {
           Description:
           <input
             type="text"
+            // value={props.descValue ? props.descValue : ""}
             name="description"
             placeholder="Write a task"
             ref={descriptionRef}
@@ -82,8 +91,8 @@ const CreateIssue = (props) => {
           </div>
         </div>
         <div className={classes.btns}>
-          <Button type="submit" innerText="Create issue" />
-          <Button onClick={onCloseModalHandler} innerText="Cancel" />
+          <Button type="submit">Create issue</Button>
+          <Button onClick={onCloseModalHandler}>Cancel</Button>
         </div>
       </form>
     </Modal>
