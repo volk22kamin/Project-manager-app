@@ -81,7 +81,7 @@ const ProjectOverview = () => {
   const onEditTask = (task) => {
     console.log("on edit task", task.task_id);
     axios.put(`http://localhost:3002/tasks/ ${task.task_id}`, task);
-    // console.log("task updated", task, task.task_id);
+    setEditTask(false);
   };
 
   const onCloseModalHandler = () => {

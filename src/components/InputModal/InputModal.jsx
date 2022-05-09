@@ -6,8 +6,15 @@ import classes from "./InputModal.module.css";
 
 let idNumber = 6;
 
+// bugs to check:
+// sometimes when changing the select drop downs you have to chose twice
+// because it goes back to "none"(first and default value)
+// the bug is only visual
+
+// also need to check why not rerenders after posting
+
 const InputModal = (props) => {
-  console.log("modal status", props.status);
+  // for now this list is local, later should get from user db
   const participantsNames = [
     "none@gmail.com",
     "velvel@gmail.com",
@@ -55,7 +62,7 @@ const InputModal = (props) => {
       priority: priority,
       task_id: props.task_id,
       project_id: 1,
-      status: status,
+      status: !status ? "to do" : status,
     };
     props.onCreateIssue(task);
   };
@@ -63,6 +70,7 @@ const InputModal = (props) => {
   const statusSelect =
     props.isEditMode === true ? (
       <select
+        defaultValue={status}
         onChange={onSelectStatusHandler}
         className={classes["drop-select-status"]}
       >
