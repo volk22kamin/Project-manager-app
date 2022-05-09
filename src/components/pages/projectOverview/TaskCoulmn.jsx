@@ -4,12 +4,8 @@ import Task from "../../task/Task";
 let count = 1;
 // gets props from project overview
 const TaskColumn = (props) => {
-  // console.log("task column props.tasks count", count++, props.tasks);
-  // const data = useContext(TaskData);
-  // console.log(data);
-
-  const onTaskUpdateHandler = (id) => {
-    props.onUpdate(id);
+  const onTaskUpdateHandler = (id, status) => {
+    props.onUpdate(id, status);
   };
   const createIssueHandler = () => {
     props.openCreateIssueModal();
@@ -30,11 +26,14 @@ const TaskColumn = (props) => {
             // for now the moving task function
             // only passed to the to do column
             <Task
-              onUpdate={props.header === "To do" && onTaskUpdateHandler}
+              onUpdate={onTaskUpdateHandler}
               key={Math.random()}
               taskText={task.text}
               taskNumber={task.task_id}
               priority={task.priority}
+              db_id={task._id}
+              status={task.status}
+              //will be changed later
               imageSrc={task.assignee}
             />
           );

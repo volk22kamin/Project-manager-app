@@ -1,12 +1,14 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Fragment } from "react";
 import cloneDeep from "lodash.clonedeep";
-import TaskData from "../../../context/dummyDataContext";
+import axios from "axios";
 
-import CreateIssue from "../../createIssue/CreateIssue";
 import ProjectWrapper from "../../projectWrapper/ProjectWrapper";
 import TaskColumn from "./TaskCoulmn";
-import axios from "axios";
+import InputModal from "../../InputModal/InputModal";
+
+let idNUmber = 19;
+let taskToChange = {};
 
 const ProjectOverview = () => {
   const allData = {
@@ -15,17 +17,9 @@ const ProjectOverview = () => {
     codeReview: [],
     done: [],
   };
-
-  const TaskDataCtx = useContext(TaskData);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [createIssueOpen, setCreateIssueOpen] = useState(false);
+  const [editTask, setEditTask] = useState(false);
   const [taskArr, setTaskArr] = useState(allData);
-
-  // for now not using, later will delete as state will be
-  // managed eith taskArr and post and fetch API
-  const [todoTasks, setTodoTasks] = useState([]);
-  const [codeReview, setCodeReview] = useState(TaskDataCtx.codeReview);
-  const [done, setDone] = useState(TaskDataCtx.done);
-  const [inProgress, setInProgress] = useState(TaskDataCtx.inProgress);
 
   const filterToColumns = (data) => {
     const cloned = cloneDeep(taskArr);
@@ -55,65 +49,97 @@ const ProjectOverview = () => {
     }
   };
 
-  // check why it is rendering twice
-  // for now fetching by click
-  // useEffect(() => {
-  //   makeAPICall();
-  // }, []);
+  useEffect(() => {
+    makeAPICall();
+  }, []);
 
-  const onTaskUpdateHandler = (id) => {
-    const taskToRemoveIndex = todoTasks.findIndex(
-      (task) => task.task_id === id
+  const onTaskClickHandler = (id, status) => {
+    const valuesTasks = Object.values(taskArr);
+    valuesTasks.map((taskArrays) =>
+      taskArrays.map((task) => {
+        if (task.task_id === id) {
+          taskToChange = task;
+        }
+      })
     );
-    if (taskToRemoveIndex >= 0) {
-      const temp = inProgress;
-      temp.push(todoTasks[taskToRemoveIndex]);
-      setInProgress(() => temp);
-      todoTasks.splice(taskToRemoveIndex, 1);
-      const filtered = todoTasks.filter((task) => task.task_id !== id);
-      setTodoTasks(filtered);
-    }
+    console.log("task to change", taskToChange);
+    setEditTask(true);
   };
 
   const onCreateIssue = (task) => {
-    console.log("project overview 23232 ", task, "12136415613");
-    console.log(task.text);
-
     axios
       .post("http://localhost:3002/tasks", task)
-      .then((response) => console.log(response, "response"))
-      .catch((error) => console.log(error, "error"));
+      .then((response) => {
+        idNUmber++;
+        setCreateIssueOpen(false);
+        console.log(response, "response");
+        console.log("data sent");
+      })
+      .catch((error) => console.log(error, "error occured"));
+  };
 
-    console.log("data sent");
+  const onEditTask = (task) => {
+    console.log("on edit task", task.task_id);
+    axios.put(`http://localhost:3002/tasks/ ${task.task_id}`, task);
+    // console.log("task updated", task, task.task_id);
   };
 
   const onCloseModalHandler = () => {
-    setModalIsOpen(false);
+    setCreateIssueOpen(false);
   };
 
   const openModalHandler = () => {
-    setModalIsOpen(true);
+    setCreateIssueOpen(true);
   };
   return (
     <Fragment>
       <button onClick={makeAPICall}>fetch</button>
-      {modalIsOpen && (
-        <CreateIssue
+      {createIssueOpen && (
+        <InputModal
+          okBtn="Submit"
+          task_id={idNUmber}
           onCreateIssue={onCreateIssue}
           onCloseModal={onCloseModalHandler}
+          isEditMode={false}
+        />
+      )}
+      {editTask && (
+        <InputModal
+          descValue={taskToChange.text}
+          userSelected={taskToChange.email}
+          prioritySelected={taskToChange.priority}
+          okBtn="Save changes"
+          task_id={taskToChange.task_id}
+          status={taskToChange.status}
+          onCreateIssue={onEditTask}
+          onCloseModal={() => setEditTask(false)}
+          isEditMode={true}
         />
       )}
 
       <ProjectWrapper projectName="Scooby Doo this shit">
         <TaskColumn
-          onUpdate={onTaskUpdateHandler}
+          onUpdate={onTaskClickHandler}
           openCreateIssueModal={openModalHandler}
           tasks={taskArr.todo}
           header="To do"
         />
-        <TaskColumn tasks={taskArr.inProgress} header="In progress" />
-        <TaskColumn tasks={taskArr.codeReview} header="Code review" />
-        <TaskColumn tasks={taskArr.done} header="Done" />
+
+        <TaskColumn
+          tasks={taskArr.inProgress}
+          onUpdate={onTaskClickHandler}
+          header="In progress"
+        />
+        <TaskColumn
+          tasks={taskArr.codeReview}
+          onUpdate={onTaskClickHandler}
+          header="Code review"
+        />
+        <TaskColumn
+          tasks={taskArr.done}
+          onUpdate={onTaskClickHandler}
+          header="Done"
+        />
       </ProjectWrapper>
     </Fragment>
   );
