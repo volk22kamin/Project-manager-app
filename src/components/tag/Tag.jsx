@@ -1,15 +1,16 @@
 import classes from "./Tag.module.css";
 
+// gets props from testModal
 const Tag = (props) => {
   return (
     <p
       className={
-        !isNaN(props.innerTag)
-          ? classes.tag
-          : classes[`priority-${props.innerTag}`]
+        isNaN(props.children)
+          ? classes[`priority-${props.children}`]
+          : classes.tag
       }
     >
-      {props.innerTag}
+      {props.children}
     </p>
   );
 };
