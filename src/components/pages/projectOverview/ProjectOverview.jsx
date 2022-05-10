@@ -6,6 +6,7 @@ import axios from "axios";
 import ProjectWrapper from "../../projectWrapper/ProjectWrapper";
 import TaskColumn from "./TaskCoulmn";
 import InputModal from "../../InputModal/InputModal";
+import uuid from "react-uuid";
 
 let idNUmber = 19;
 let taskToChange = {};
@@ -66,6 +67,7 @@ const ProjectOverview = () => {
   };
 
   const onCreateIssue = (task) => {
+    console.log("project task", task);
     axios
       .post("http://localhost:3002/tasks", task)
       .then((response) => {
@@ -98,13 +100,15 @@ const ProjectOverview = () => {
   const openModalHandler = () => {
     setCreateIssueOpen(true);
   };
+  // const UUID = uuid();
+  // console.log("uuid", uuid());
   return (
     <Fragment>
       <button onClick={makeAPICall}>fetch</button>
       {createIssueOpen && (
         <InputModal
           okBtn="Submit"
-          task_id={idNUmber}
+          task_id={Date.now().valueOf()}
           onCreateIssue={onCreateIssue}
           onCloseModal={onCloseModalHandler}
           isEditMode={false}

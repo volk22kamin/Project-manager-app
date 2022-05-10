@@ -66,6 +66,7 @@ const InputModal = (props) => {
       // uniqe_id: uuid(),
       status: !status ? "to do" : status,
     };
+    console.log(props.task_id);
     props.onCreateIssue(task);
   };
 
