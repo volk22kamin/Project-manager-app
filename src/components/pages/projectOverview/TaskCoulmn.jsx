@@ -1,7 +1,6 @@
 import classes from "./TaskColumn.module.css";
 import Task from "../../task/Task";
 
-let count = 1;
 // gets props from project overview
 const TaskColumn = (props) => {
   const onTaskUpdateHandler = (id, status) => {

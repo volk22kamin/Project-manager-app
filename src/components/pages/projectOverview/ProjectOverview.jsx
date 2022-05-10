@@ -6,6 +6,7 @@ import axios from "axios";
 import ProjectWrapper from "../../projectWrapper/ProjectWrapper";
 import TaskColumn from "./TaskCoulmn";
 import InputModal from "../../InputModal/InputModal";
+import uuid from "react-uuid";
 
 let idNUmber = 19;
 let taskToChange = {};
@@ -51,7 +52,7 @@ const ProjectOverview = () => {
 
   useEffect(() => {
     makeAPICall();
-  }, []);
+  }, [editTask, createIssueOpen]);
 
   const onTaskClickHandler = (id, status) => {
     const valuesTasks = Object.values(taskArr);
@@ -62,11 +63,11 @@ const ProjectOverview = () => {
         }
       })
     );
-    console.log("task to change", taskToChange);
     setEditTask(true);
   };
 
   const onCreateIssue = (task) => {
+    console.log("project task", task);
     axios
       .post("http://localhost:3002/tasks", task)
       .then((response) => {
@@ -81,7 +82,15 @@ const ProjectOverview = () => {
   const onEditTask = (task) => {
     console.log("on edit task", task.task_id);
     axios.put(`http://localhost:3002/tasks/ ${task.task_id}`, task);
-    // console.log("task updated", task, task.task_id);
+    setEditTask(false);
+  };
+
+  const onDeleteTask = (task) => {
+    console.log("task deleted", task);
+    axios
+      .delete(`http://localhost:3002/tasks/ ${task.task_id}`)
+      .then(() => console.log("task deleted"))
+      .catch((error) => console.log(error, "error"));
   };
 
   const onCloseModalHandler = () => {
@@ -91,13 +100,15 @@ const ProjectOverview = () => {
   const openModalHandler = () => {
     setCreateIssueOpen(true);
   };
+  // const UUID = uuid();
+  // console.log("uuid", uuid());
   return (
     <Fragment>
       <button onClick={makeAPICall}>fetch</button>
       {createIssueOpen && (
         <InputModal
           okBtn="Submit"
-          task_id={idNUmber}
+          task_id={Date.now().valueOf()}
           onCreateIssue={onCreateIssue}
           onCloseModal={onCloseModalHandler}
           isEditMode={false}
@@ -113,6 +124,7 @@ const ProjectOverview = () => {
           status={taskToChange.status}
           onCreateIssue={onEditTask}
           onCloseModal={() => setEditTask(false)}
+          delete={onDeleteTask}
           isEditMode={true}
         />
       )}

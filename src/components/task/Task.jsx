@@ -16,7 +16,7 @@ const Task = (props) => {
     >
       <p className={classes.text}>{props.taskText}</p>
       <footer className={classes.footer}>
-        <Tag>{props.taskNumber}</Tag>
+        {/* <Tag>{props.taskNumber}</Tag> */}
         <Tag>{props.priority}</Tag>
         <ProfileIcon imageSrc={props.imageSrc} />
       </footer>
