@@ -4,8 +4,6 @@ import classes from "./ProfilePage.module.css";
 
 const ProfilePageWrap = (props) => {
   const handler = (event) => {
-    console.log(event.target.className);
-
     props.onCloseProfile();
   };
   return (

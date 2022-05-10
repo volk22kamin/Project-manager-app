@@ -3,12 +3,12 @@ import { Fragment } from "react";
 import cloneDeep from "lodash.clonedeep";
 import axios from "axios";
 
-import ProjectWrapper from "../../projectWrapper/ProjectWrapper";
-import TaskColumn from "./TaskCoulmn";
-import InputModal from "../../InputModal/InputModal";
-import uuid from "react-uuid";
+import { poting } from "../../../API/ApiCalls";
 
-let idNUmber = 19;
+import ProjectWrapper from "../../projectWrapper/ProjectWrapper";
+import InputModal from "../../InputModal/InputModal";
+import TaskColumnWrapper from "./TaskColumnWrapper";
+
 let taskToChange = {};
 
 const ProjectOverview = () => {
@@ -67,26 +67,22 @@ const ProjectOverview = () => {
   };
 
   const onCreateIssue = (task) => {
-    console.log("project task", task);
     axios
       .post("http://localhost:3002/tasks", task)
       .then((response) => {
-        idNUmber++;
         setCreateIssueOpen(false);
-        console.log(response, "response");
+        // console.log(response, "response");
         console.log("data sent");
       })
       .catch((error) => console.log(error, "error occured"));
   };
 
   const onEditTask = (task) => {
-    console.log("on edit task", task.task_id);
     axios.put(`http://localhost:3002/tasks/ ${task.task_id}`, task);
     setEditTask(false);
   };
 
   const onDeleteTask = (task) => {
-    console.log("task deleted", task);
     axios
       .delete(`http://localhost:3002/tasks/ ${task.task_id}`)
       .then(() => console.log("task deleted"))
@@ -100,8 +96,7 @@ const ProjectOverview = () => {
   const openModalHandler = () => {
     setCreateIssueOpen(true);
   };
-  // const UUID = uuid();
-  // console.log("uuid", uuid());
+
   return (
     <Fragment>
       <button onClick={makeAPICall}>fetch</button>
@@ -129,28 +124,11 @@ const ProjectOverview = () => {
         />
       )}
 
-      <ProjectWrapper projectName="Scooby Doo this shit">
-        <TaskColumn
+      <ProjectWrapper projectName="First project test">
+        <TaskColumnWrapper
           onUpdate={onTaskClickHandler}
           openCreateIssueModal={openModalHandler}
-          tasks={taskArr.todo}
-          header="To do"
-        />
-
-        <TaskColumn
-          tasks={taskArr.inProgress}
-          onUpdate={onTaskClickHandler}
-          header="In progress"
-        />
-        <TaskColumn
-          tasks={taskArr.codeReview}
-          onUpdate={onTaskClickHandler}
-          header="Code review"
-        />
-        <TaskColumn
-          tasks={taskArr.done}
-          onUpdate={onTaskClickHandler}
-          header="Done"
+          tasks={taskArr}
         />
       </ProjectWrapper>
     </Fragment>
