@@ -4,8 +4,9 @@ import { Fragment } from "react";
 
 const BackDrop = (props) => {
   return (
-    <div onClick={props.onClose} className={classes.backdrop}>
-      {props.children}
+    <div>
+      <div onClick={props.onClose} className={classes.backdrop}></div>
+      <div>{props.children}</div>
     </div>
   );
 };
@@ -21,7 +22,7 @@ const ModalOverLay = (props) => {
 const Modal = (props) => {
   return (
     <Fragment>
-      <BackDrop>
+      <BackDrop onClose={props.onClose}>
         <ModalOverLay>{props.children}</ModalOverLay>
       </BackDrop>
     </Fragment>

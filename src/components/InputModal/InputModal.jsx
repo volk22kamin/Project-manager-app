@@ -3,21 +3,15 @@ import Modal from "../modal/Modal";
 import Tag from "../tag/Tag";
 import Button from "../button/Button";
 import classes from "./InputModal.module.css";
-import uuid from "react-uuid";
-
-let idNumber = 6;
 
 // bugs to check:
-// sometimes when changing the select drop downs you have to chose twice
-// because it goes back to "none"(first and default value)
-// the bug is only visual
-
-// also need to check why not rerenders after posting
+// when changing assignee it dosent chage
+// the bug is only visual(the db changes)
 
 const InputModal = (props) => {
   // for now this list is local, later should get from user db
   const participantsNames = [
-    "none@gmail.com",
+    "none",
     "velvel@gmail.com",
     "mike@gmail.com",
     "josh@gmail.com",
@@ -66,7 +60,6 @@ const InputModal = (props) => {
       // uniqe_id: uuid(),
       status: !status ? "to do" : status,
     };
-    console.log(props.task_id);
     props.onCreateIssue(task);
   };
 
@@ -97,7 +90,7 @@ const InputModal = (props) => {
     ) : null;
 
   return (
-    <Modal>
+    <Modal onClose={props.onCloseModal}>
       <form onSubmit={onSubmitingForm} className={classes.form}>
         <div className={classes["input-box"]}>
           <label>Description</label>
@@ -112,7 +105,7 @@ const InputModal = (props) => {
         </div>
         {/* ---------------------- */}
         <div className={classes.bottomHalf}>
-          <Tag>{props.task_id}</Tag>
+          {/* <Tag>{props.task_id}</Tag> */}
           {statusSelect}
           <div className={classes["drop-select"]}>
             <label>Assign to: </label>

@@ -7,21 +7,13 @@ const ProfileIcon = (props) => {
   const [showProfile, setShowProfile] = useState(false);
 
   const profileClickHandler = () => {
-    console.log("handler", showProfile);
     if (showProfile === true) {
-      console.log("open");
       return;
     }
     if (!showProfile) {
-      console.log("inseide", showProfile);
       setShowProfile(() => true);
-      console.log("inseide2", showProfile);
     }
   };
-
-  // useEffect(() => {
-  //   setShowProfile(false);
-  // }, []);
 
   const onCloseProfileHandler = () => {
     setShowProfile(false);
