@@ -3,6 +3,7 @@ import Modal from "../modal/Modal";
 import Tag from "../tag/Tag";
 import Button from "../button/Button";
 import classes from "./InputModal.module.css";
+import uuid from "react-uuid";
 
 let idNumber = 6;
 
@@ -62,9 +63,22 @@ const InputModal = (props) => {
       priority: priority,
       task_id: props.task_id,
       project_id: 1,
+      // uniqe_id: uuid(),
       status: !status ? "to do" : status,
     };
     props.onCreateIssue(task);
+  };
+
+  const onDeleteTask = (task) => {
+    task = {
+      text: descriptionVal,
+      email: email,
+      priority: priority,
+      task_id: props.task_id,
+      project_id: 1,
+      status: !status ? "to do" : status,
+    };
+    props.delete(task);
   };
 
   const statusSelect =
@@ -135,6 +149,9 @@ const InputModal = (props) => {
         </div>
         <div className={classes.btns}>
           <Button type="submit">{props.okBtn}</Button>
+          {props.isEditMode ? (
+            <Button onClick={onDeleteTask}>Delete</Button>
+          ) : null}
           <Button onClick={props.onCloseModal}>Cancel</Button>
         </div>
         {/* ------------------------------- */}

@@ -51,7 +51,7 @@ const ProjectOverview = () => {
 
   useEffect(() => {
     makeAPICall();
-  }, []);
+  }, [editTask, createIssueOpen]);
 
   const onTaskClickHandler = (id, status) => {
     const valuesTasks = Object.values(taskArr);
@@ -62,7 +62,6 @@ const ProjectOverview = () => {
         }
       })
     );
-    console.log("task to change", taskToChange);
     setEditTask(true);
   };
 
@@ -82,6 +81,14 @@ const ProjectOverview = () => {
     console.log("on edit task", task.task_id);
     axios.put(`http://localhost:3002/tasks/ ${task.task_id}`, task);
     setEditTask(false);
+  };
+
+  const onDeleteTask = (task) => {
+    console.log("task deleted", task);
+    axios
+      .delete(`http://localhost:3002/tasks/ ${task.task_id}`)
+      .then(() => console.log("task deleted"))
+      .catch((error) => console.log(error, "error"));
   };
 
   const onCloseModalHandler = () => {
@@ -113,6 +120,7 @@ const ProjectOverview = () => {
           status={taskToChange.status}
           onCreateIssue={onEditTask}
           onCloseModal={() => setEditTask(false)}
+          delete={onDeleteTask}
           isEditMode={true}
         />
       )}

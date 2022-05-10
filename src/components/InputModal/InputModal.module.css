@@ -59,7 +59,7 @@ label {
   justify-content: space-between;
 }
 .btns {
-  padding: 20px 20px 5px 20px;
+  padding: 20px 0px 0px 0px;
   display: flex;
   justify-content: space-around;
 }
