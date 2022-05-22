@@ -1,35 +1,32 @@
 import Button from "../../../button/Button";
 import classes from "./InputForm.module.css";
 import InputWrap from "./InputWrap";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
+// gets props from login page
 const InputForm = (props) => {
-  const refEmail = useRef("vel@gmail.com");
-  const refname = useRef("");
-  const refconfirm = useRef("");
-  const refpassword = useRef("12315ds");
-
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [email, setEmail] = useState("");
 
-  // const userNameChangeHandler = (event) => {
-  //   setUserName(event.target.value);
-  // };
-  // const emailChangeHandler = (event) => {
-  //   setEmail(event.target.value);
-  // };
-  // const passwordChangeHandler = (event) => {
-  //   setPassword(event.target.value);
-  // };
-  // const confirmChangeHandler = (event) => {
-  //   setConfirm(event.target.value);
-  // };
+  const userNameChangeHandler = (event) => {
+    setUserName(event.target.value);
+  };
+  const emailChangeHandler = (event) => {
+    setEmail(event.target.value);
+  };
+  const passwordChangeHandler = (event) => {
+    setPassword(event.target.value);
+  };
+  const confirmChangeHandler = (event) => {
+    setConfirm(event.target.value);
+  };
 
   const validateConfirmPassword = () => {
-    if (!refconfirm.current.value) return true;
-    return refpassword.current.value === refconfirm.current.value;
+    // add if not the same show some feedback
+    if (!confirm) return true;
+    return confirm === password;
   };
 
   const onSubmitHandler = (event) => {
@@ -39,29 +36,31 @@ const InputForm = (props) => {
       return;
     }
     const loginData = {
-      email: refEmail.current.value,
-      name: refname.current.value ? refname.current.value : "",
-      password: refpassword.current.value,
-      confirm: refconfirm.current.value ? refconfirm.current.value : "",
+      email: email,
+      name: userName ? userName : "",
+      password: password,
+      // check if it wont interfere later with the validation
+      // for now cant send because i am not storing the confirm
+      // so its not in the scheme
+      // confirm: confirm ? confirm : "",
     };
     props.onLogin(loginData);
+    console.log("logn data from input form to login page", loginData);
   };
 
   return (
     <InputWrap>
       <form onSubmit={onSubmitHandler} className={classes.form}>
         <div className={classes.inputForm}>
-          {props.name && (
+          {props.register && (
             <div className={classes.item}>
               <label htmlFor="fullname" className={classes.label}>
                 Full name
                 <input
                   type="text"
                   name="fullName"
-                  id="fullName"
-                  ref={refname}
                   required
-                  // onChange={userNameChangeHandler}
+                  onChange={userNameChangeHandler}
                 />
               </label>
             </div>
@@ -72,11 +71,8 @@ const InputForm = (props) => {
               <input
                 type="email"
                 name="email"
-                id="email"
-                ref={refEmail}
                 required
-                value={"vel@gmail.com"}
-                // onChange={emailChangeHandler}
+                onChange={emailChangeHandler}
               />
             </label>
           </div>
@@ -86,31 +82,27 @@ const InputForm = (props) => {
               <input
                 type="password"
                 name="password"
-                id="password"
-                ref={refpassword}
                 required
-                value={"hgsdvks"}
-                // onChange={passwordChangeHandler}
+                onChange={passwordChangeHandler}
               />
             </label>
           </div>
-          {props.confirm && (
+          {props.register && (
             <div className={classes.item}>
               <label className={classes.label}>
                 Confirm Password
                 <input
                   type="password"
                   name="confirm"
-                  id="confirm"
-                  ref={refconfirm}
                   required
+                  onChange={confirmChangeHandler}
                 />
               </label>
             </div>
           )}
         </div>
         <div className={classes.btn}>
-          <Button type="submit">{props.action}</Button>
+          <Button type="submit">{props.actionName}</Button>
         </div>
       </form>
     </InputWrap>
