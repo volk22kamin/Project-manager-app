@@ -3,8 +3,6 @@ import { Fragment } from "react";
 import cloneDeep from "lodash.clonedeep";
 import axios from "axios";
 
-import { poting } from "../../../API/ApiCalls";
-
 import ProjectWrapper from "../../projectWrapper/ProjectWrapper";
 import InputModal from "../../InputModal/InputModal";
 import TaskColumnWrapper from "./TaskColumnWrapper";

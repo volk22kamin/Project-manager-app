@@ -1,31 +1,55 @@
-import { useState } from "react";
-import { Fragment } from "react";
+import { useEffect, useState, Fragment } from "react";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { verifyToken } from "./API/UserAPIcalls";
+
 import LoginPage from "./components/pages/loginPage/LoginPage";
 import Navbar from "./components/navbar/Navbar";
 import ProjectOverview from "./components/pages/projectOverview/ProjectOverview";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./App.css";
 
-function App() {
-  const [isLoggedIn, setIsLoggenIn] = useState(false);
-  // const navigate = useNavigate();
+let userInfo = {};
 
-  const onLogInHandler = (userDetails) => {
-    console.log("app re-render");
+// in first log in
+// the user info doesnot show in profile modal
+// until refreshing
+
+function App() {
+  const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggenIn] = useState(false);
+
+  useEffect(() => {
+    const verify = async () => {
+      const token = localStorage.getItem("token-promger");
+      if (token) {
+        const response = await verifyToken(token);
+        userInfo = response.data;
+        setIsLoggenIn(true);
+        navigate("project_overview");
+      } else {
+        console.log("token not available");
+      }
+    };
+    verify();
+  }, []);
+
+  const onLogInHandler = () => {
     setIsLoggenIn(true);
-    console.log(userDetails, "app  ");
   };
 
   return (
     <Fragment>
-      <Navbar loggedIn={isLoggedIn} />
-      <BrowserRouter>
-        <Routes>
-          <Route index element={<LoginPage onLogin={onLogInHandler} />} />
-          <Route path="project_overview" element={<ProjectOverview />} />
-        </Routes>
-      </BrowserRouter>
+      <Navbar userInfo={userInfo} loggedIn={isLoggedIn} />
+      <Routes>
+        <Route
+          // path="/signin"
+          index
+          element={
+            <LoginPage isLoggedIn={isLoggedIn} onLogin={onLogInHandler} />
+          }
+        />
+        <Route path="project_overview" element={<ProjectOverview />} />
+      </Routes>
     </Fragment>
   );
 }

@@ -33,8 +33,8 @@ const ProfileIcon = (props) => {
         <ProfilePage
           onCloseProfile={onCloseProfileHandler}
           imageSrc={logo}
-          username="mike"
-          email="sdcds@"
+          username={props.name}
+          email={props.email}
         />
       )}
     </div>

@@ -10,6 +10,7 @@ import ProfilePage from "../pages/profilePage/ProfilePage";
 
 // gets props from app
 const Navbar = (props) => {
+  const { name, email } = props.userInfo;
   const onLogoClickHandler = () => {
     console.log("logo clicked");
   };
@@ -28,9 +29,14 @@ const Navbar = (props) => {
           My tasks
         </h2>
       )}
-      {props.loggedIn === true && <SearchBar />}
-      {props.loggedIn === true && (
-        <ProfileIcon imageSrc={profileIcon} className={classes.profile}>
+      {props.loggedIn && <SearchBar />}
+      {props.loggedIn && (
+        <ProfileIcon
+          name={name}
+          email={email}
+          imageSrc={profileIcon}
+          className={classes.profile}
+        >
           Profile
         </ProfileIcon>
       )}
