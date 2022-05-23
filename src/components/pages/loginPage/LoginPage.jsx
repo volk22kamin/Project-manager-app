@@ -2,9 +2,16 @@ import Card from "../../card/Card";
 import InputForm from "./inputForm/InputForm";
 import classes from "./inputForm/InputForm.module.css";
 import { loginHandler, registerHandler } from "../../../API/UserAPIcalls";
+import { useState } from "react";
+import Modal from "../../modal/Modal";
+import Button from "../../button/Button";
+import ErrorModal from "../../errorModal/ErrorModal";
 
+let errorMsg = "";
 // gets props from app
 const LoginPage = (props) => {
+  const [modalOpen, setModalOpen] = useState(false);
+
   const onRegisterHandler = async (user) => {
     // add error handling
     const response = await registerHandler(user);
@@ -19,12 +26,23 @@ const LoginPage = (props) => {
       localStorage.setItem("token-promger", data);
       props.loginOnToken(response.isNew);
     } else if (response.data.status === "error") {
-      console.log("res", data);
+      errorMsg = data;
+      setModalOpen(true);
     }
+  };
+
+  const onCloseModal = () => {
+    setModalOpen(false);
   };
 
   return (
     <div>
+      {modalOpen ? (
+        <ErrorModal
+          errorMsg={errorMsg}
+          onCloseModal={onCloseModal}
+        ></ErrorModal>
+      ) : null}
       <div className={classes.page}>
         <Card>
           <InputForm
