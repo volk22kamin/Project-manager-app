@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Fragment } from "react";
 import cloneDeep from "lodash.clonedeep";
 import axios from "axios";
+import AppContext from "../../../context/Context";
 
 import ProjectWrapper from "../../projectWrapper/ProjectWrapper";
 import InputModal from "../../InputModal/InputModal";
@@ -10,6 +11,10 @@ import TaskColumnWrapper from "./TaskColumnWrapper";
 let taskToChange = {};
 
 const ProjectOverview = () => {
+  const context = useContext(AppContext);
+  let emails = context.userEmails;
+  emails = context.userEmails.map((user) => user.email);
+
   const allData = {
     todo: [],
     inProgress: [],
@@ -100,6 +105,7 @@ const ProjectOverview = () => {
       <button onClick={makeAPICall}>fetch</button>
       {createIssueOpen && (
         <InputModal
+          usersList={emails}
           okBtn="Submit"
           task_id={Date.now().valueOf()}
           onCreateIssue={onCreateIssue}
@@ -109,6 +115,7 @@ const ProjectOverview = () => {
       )}
       {editTask && (
         <InputModal
+          usersList={emails}
           descValue={taskToChange.text}
           userSelected={taskToChange.email}
           prioritySelected={taskToChange.priority}

@@ -40,3 +40,12 @@ export const verifyToken = async (token) => {
     return error;
   }
 };
+
+export const getAllEmails = async () => {
+  try {
+    const res = axios.get(APIaddress + "/users/emails");
+    return (await res).data;
+  } catch (error) {
+    return error;
+  }
+};

@@ -7,9 +7,11 @@ import Button from "../button/Button";
 
 // for now starts with 5 becouse theres 4 dummy issues
 let idNumber = 6;
+// probably canceled at all
+// for now the id is local have to check if it wont restart every load
 
 // gets props from projectOverview
-// for now the id is local have to check if it wont restart every load
+
 const CreateIssue = (props) => {
   // later this list should be passed via props
   const participantsNames = [

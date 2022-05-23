@@ -10,12 +10,7 @@ import classes from "./InputModal.module.css";
 
 const InputModal = (props) => {
   // for now this list is local, later should get from user db
-  const participantsNames = [
-    "none",
-    "velvel@gmail.com",
-    "mike@gmail.com",
-    "josh@gmail.com",
-  ];
+  const participantsNames = props.usersList;
 
   const priorities = ["none", "epic", "high", "low"];
 
