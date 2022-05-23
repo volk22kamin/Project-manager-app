@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import ProfileIcon from "./profileIcon/ProfileIcon";
+import ProfileModal from "./profileModal/ProfileModal";
 import classes from "./Navbar.module.css";
 // for now dummy icon
 import profileIcon from "../../testProfile.jpg";
@@ -18,6 +18,10 @@ const Navbar = (props) => {
     console.log("myTask clicked");
   };
 
+  const logOut = () => {
+    props.logOut();
+  };
+
   return (
     <div className={classes.navbar}>
       <div className={classes.logoContainer} onClick={onLogoClickHandler}>
@@ -31,14 +35,15 @@ const Navbar = (props) => {
       )}
       {props.loggedIn && <SearchBar />}
       {props.loggedIn && (
-        <ProfileIcon
+        <ProfileModal
+          logOut={logOut}
           name={name}
           email={email}
           imageSrc={profileIcon}
           className={classes.profile}
         >
           Profile
-        </ProfileIcon>
+        </ProfileModal>
       )}
     </div>
   );

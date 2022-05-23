@@ -39,13 +39,8 @@ const InputForm = (props) => {
       email: email,
       name: userName ? userName : "",
       password: password,
-      // check if it wont interfere later with the validation
-      // for now cant send because i am not storing the confirm
-      // so its not in the scheme
-      // confirm: confirm ? confirm : "",
     };
     props.onLogin(loginData);
-    console.log("logn data from input form to login page", loginData);
   };
 
   return (

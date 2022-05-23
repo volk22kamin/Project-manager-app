@@ -5,19 +5,27 @@ const APIaddress = "http://localhost:3002";
 export const loginHandler = async (userDetails) => {
   try {
     const res = axios.post(APIaddress + "/users/login", userDetails);
-    return (await res).data;
+    return {
+      isNew: false,
+      data: await (await res).data,
+    };
   } catch (error) {
-    console.log(error);
-    return await error;
+    return error;
   }
 };
 
 export const registerHandler = async (user) => {
   try {
     const res = axios.post(APIaddress + "/users/register", user);
-    return { status: (await res).status, token: await (await res).data.data };
+    // console.log(await res);
+    return {
+      isNew: (await res).data.isNew,
+      status: (await res).data.status,
+      token: await (await res).data.data,
+    };
   } catch (error) {
     console.log(error);
+    return error;
   }
 };
 

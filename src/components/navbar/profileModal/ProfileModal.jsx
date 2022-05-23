@@ -1,9 +1,9 @@
-import classes from "./ProfileIcon.module.css";
+import classes from "./ProfileModal.module.css";
 import ProfilePage from "../../pages/profilePage/ProfilePage";
 import logo from "../../../testProfile.jpg";
 import { useState, useEffect } from "react";
 
-const ProfileIcon = (props) => {
+const ProfileModal = (props) => {
   const [showProfile, setShowProfile] = useState(false);
 
   const profileClickHandler = () => {
@@ -19,6 +19,10 @@ const ProfileIcon = (props) => {
     setShowProfile(false);
   };
 
+  const logOut = () => {
+    props.logOut();
+  };
+
   return (
     <div>
       <div className={classes.profile}>
@@ -31,6 +35,7 @@ const ProfileIcon = (props) => {
       </div>
       {showProfile && (
         <ProfilePage
+          logOut={logOut}
           onCloseProfile={onCloseProfileHandler}
           imageSrc={logo}
           username={props.name}
@@ -41,4 +46,4 @@ const ProfileIcon = (props) => {
   );
 };
 
-export default ProfileIcon;
+export default ProfileModal;
