@@ -1,4 +1,4 @@
-import ProfileIcon from "../navbar/profileIcon/ProfileIcon";
+import ProfileModal from "../navbar/profileModal/ProfileModal";
 import Tag from "../tag/Tag";
 import classes from "./Task.module.css";
 
@@ -18,7 +18,7 @@ const Task = (props) => {
       <footer className={classes.footer}>
         {/* <Tag>{props.taskNumber}</Tag> */}
         <Tag>{props.priority}</Tag>
-        <ProfileIcon imageSrc={props.imageSrc} />
+        <ProfileModal imageSrc={props.imageSrc} />
       </footer>
     </div>
   );

@@ -1,7 +1,5 @@
 import classes from "./ProfilePage.module.css";
-import classes2 from "../../navbar/profileIcon/ProfileIcon.module.css";
 import ProfilePageWrap from "./ProfilePageWrap";
-import ProfileIcon from "../../navbar/profileIcon/ProfileIcon";
 import Button from "../../button/Button";
 
 const ProfilePage = (props) => {
@@ -10,6 +8,7 @@ const ProfilePage = (props) => {
   };
   const onLogOutClickHandler = () => {
     console.log("Log out clicked");
+    props.logOut();
   };
   const onCloseProfileHandler = () => {
     props.onCloseProfile();
