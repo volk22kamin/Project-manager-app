@@ -12,8 +12,7 @@ let taskToChange = {};
 
 const ProjectOverview = () => {
   const context = useContext(AppContext);
-  let emails = context.userEmails;
-  emails = context.userEmails.map((user) => user.email);
+  const emails = context.userEmails.map((user) => user.email);
 
   const allData = {
     todo: [],
@@ -81,7 +80,11 @@ const ProjectOverview = () => {
   };
 
   const onEditTask = (task) => {
-    axios.put(`http://localhost:3002/tasks/ ${task.task_id}`, task);
+    try {
+      axios.put(`http://localhost:3002/tasks/ ${task.task_id}`, task);
+    } catch (error) {
+      console.log("error occured", error);
+    }
     setEditTask(false);
   };
 
