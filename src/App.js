@@ -31,6 +31,7 @@ function App() {
       userInfo = response.data;
       userInfo.isNew = isNew;
       setIsLoggenIn(true);
+      context.userLogged = userInfo;
       navigate("welcome");
       const timer = setTimeout(() => {
         navigate("project_overview");

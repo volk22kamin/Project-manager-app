@@ -1,39 +1,40 @@
 import classes from "./ProfileModal.module.css";
 import ProfilePage from "../../pages/profilePage/ProfilePage";
 import logo from "../../../testProfile.jpg";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import Profile from "../../profile/Profile";
+import AppContext from "../../../context/Context";
 
 const ProfileModal = (props) => {
-  const [showProfile, setShowProfile] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const context = useContext(AppContext);
+
+  const email = context.userLogged && context.userLogged.email;
 
   const profileClickHandler = () => {
-    if (showProfile === true) {
+    if (showProfileModal === true) {
       return;
     }
-    if (!showProfile) {
-      setShowProfile(() => true);
+    if (!showProfileModal) {
+      setShowProfileModal(() => true);
     }
   };
 
   const onCloseProfileHandler = () => {
-    setShowProfile(false);
+    setShowProfileModal(false);
   };
 
   const logOut = () => {
     props.logOut();
   };
 
+  // check why sending context.logged.email does not work without checking he's there
   return (
     <div>
       <div className={classes.profile}>
-        <img
-          onClick={profileClickHandler}
-          className={classes.profileImage}
-          src={props.imageSrc}
-          alt="profile"
-        />
+        <Profile onClick={profileClickHandler} name={email} />
       </div>
-      {showProfile && (
+      {showProfileModal && (
         <ProfilePage
           logOut={logOut}
           onCloseProfile={onCloseProfileHandler}

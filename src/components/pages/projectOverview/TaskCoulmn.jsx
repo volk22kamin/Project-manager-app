@@ -22,8 +22,6 @@ const TaskColumn = (props) => {
       <div className={classes["column-body"]}>
         {props.tasks.map((task) => {
           return (
-            // for now the moving task function
-            // only passed to the to do column
             <Task
               onUpdate={onTaskUpdateHandler}
               key={Math.random()}

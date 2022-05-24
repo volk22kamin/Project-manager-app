@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { Fragment } from "react";
 import cloneDeep from "lodash.clonedeep";
-import axios from "axios";
 import AppContext from "../../../context/Context";
 
 import ProjectWrapper from "../../projectWrapper/ProjectWrapper";
@@ -100,7 +99,6 @@ const ProjectOverview = () => {
 
   return (
     <Fragment>
-      <button onClick={getTasksFromAPI}>fetch</button>
       {createIssueOpen && (
         <InputModal
           usersList={emails}
@@ -127,7 +125,7 @@ const ProjectOverview = () => {
         />
       )}
 
-      <ProjectWrapper projectName="First project test">
+      <ProjectWrapper usersList={emails} projectName="First project test">
         <TaskColumnWrapper
           onUpdate={onTaskClickHandler}
           openCreateIssueModal={openModalHandler}
