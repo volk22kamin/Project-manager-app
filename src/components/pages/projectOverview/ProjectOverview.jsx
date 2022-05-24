@@ -1,12 +1,18 @@
 import { useState, useEffect, useContext } from "react";
 import { Fragment } from "react";
 import cloneDeep from "lodash.clonedeep";
-import axios from "axios";
 import AppContext from "../../../context/Context";
 
 import ProjectWrapper from "../../projectWrapper/ProjectWrapper";
 import InputModal from "../../InputModal/InputModal";
 import TaskColumnWrapper from "./TaskColumnWrapper";
+
+import {
+  getAllTasks,
+  postTask,
+  putEditTask,
+  deleteTask,
+} from "../../../API/TaskAPIcalls";
 
 let taskToChange = {};
 
@@ -24,16 +30,16 @@ const ProjectOverview = () => {
   const [editTask, setEditTask] = useState(false);
   const [taskArr, setTaskArr] = useState(allData);
 
-  const filterToColumns = (data) => {
+  const filterToColumns = (tasks) => {
     const cloned = cloneDeep(taskArr);
-    const filterTodo = data.filter((task) => task.status === "to do");
-    const filterInProgress = data.filter(
+    const filterTodo = tasks.filter((task) => task.status === "to do");
+    const filterInProgress = tasks.filter(
       (task) => task.status === "in progress"
     );
-    const filterCodeReview = data.filter(
+    const filterCodeReview = tasks.filter(
       (task) => task.status === "code review"
     );
-    const filterDone = data.filter((task) => task.status === "done");
+    const filterDone = tasks.filter((task) => task.status === "done");
     cloned.todo = filterTodo;
     cloned.inProgress = filterInProgress;
     cloned.codeReview = filterCodeReview;
@@ -42,18 +48,13 @@ const ProjectOverview = () => {
     setTaskArr(cloned);
   };
 
-  const makeAPICall = async () => {
-    try {
-      const response = await fetch("http://localhost:3002/tasks");
-      const data = await response.json();
-      filterToColumns(data);
-    } catch (e) {
-      console.log("couldn't fetch ", e);
-    }
+  const getTasksFromAPI = async () => {
+    const tasks = await getAllTasks();
+    filterToColumns(tasks);
   };
 
   useEffect(() => {
-    makeAPICall();
+    getTasksFromAPI();
   }, [editTask, createIssueOpen]);
 
   const onTaskClickHandler = (id, status) => {
@@ -68,31 +69,24 @@ const ProjectOverview = () => {
     setEditTask(true);
   };
 
-  const onCreateIssue = (task) => {
-    axios
-      .post("http://localhost:3002/tasks", task)
-      .then((response) => {
-        setCreateIssueOpen(false);
-        // console.log(response, "response");
-        console.log("data sent");
-      })
-      .catch((error) => console.log(error, "error occured"));
+  const onCreateIssue = async (task) => {
+    const res = await postTask(task);
+    if (res.code === "ERR_BAD_REQUEST") {
+      console.log(res.response.data[0].message);
+    }
+    setCreateIssueOpen(false);
   };
 
-  const onEditTask = (task) => {
-    try {
-      axios.put(`http://localhost:3002/tasks/ ${task.task_id}`, task);
-    } catch (error) {
-      console.log("error occured", error);
+  const onEditTask = async (task) => {
+    const res = await putEditTask(task);
+    if (res.code === "ERR_BAD_REQUEST") {
+      console.log(res.response.data[0].message);
     }
     setEditTask(false);
   };
 
-  const onDeleteTask = (task) => {
-    axios
-      .delete(`http://localhost:3002/tasks/ ${task.task_id}`)
-      .then(() => console.log("task deleted"))
-      .catch((error) => console.log(error, "error"));
+  const onDeleteTask = async (task) => {
+    const res = await deleteTask(task);
   };
 
   const onCloseModalHandler = () => {
@@ -105,7 +99,6 @@ const ProjectOverview = () => {
 
   return (
     <Fragment>
-      <button onClick={makeAPICall}>fetch</button>
       {createIssueOpen && (
         <InputModal
           usersList={emails}
@@ -132,7 +125,7 @@ const ProjectOverview = () => {
         />
       )}
 
-      <ProjectWrapper projectName="First project test">
+      <ProjectWrapper usersList={emails} projectName="First project test">
         <TaskColumnWrapper
           onUpdate={onTaskClickHandler}
           openCreateIssueModal={openModalHandler}

@@ -34,17 +34,7 @@ const Navbar = (props) => {
         </h2>
       )}
       {props.loggedIn && <SearchBar />}
-      {props.loggedIn && (
-        <ProfileModal
-          logOut={logOut}
-          name={name}
-          email={email}
-          imageSrc={profileIcon}
-          className={classes.profile}
-        >
-          Profile
-        </ProfileModal>
-      )}
+      {props.loggedIn && <ProfileModal logOut={logOut}>Profile</ProfileModal>}
     </div>
   );
 };
