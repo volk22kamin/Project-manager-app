@@ -5,89 +5,83 @@ import Button from "../button/Button";
 import classes from "./InputModal.module.css";
 
 // bugs to check:
-// when changing assignee it dosent chage
+// when changing assignee it dosent change
 // the bug is only visual(the db changes)
 
 const InputModal = (props) => {
-  // for now this list is local, later should get from user db
-  const participantsNames = [
-    "none",
-    "velvel@gmail.com",
-    "mike@gmail.com",
-    "josh@gmail.com",
-  ];
-
+  const emails = props.usersList;
   const priorities = ["none", "epic", "high", "low"];
 
-  const descValue = props.descValue === undefined ? "" : props.descValue;
-  const assignee =
-    props.userSelected === undefined
-      ? participantsNames[0]
-      : props.userSelected;
-  const priorityState =
-    props.prioritySelected === undefined
-      ? priorities[0]
-      : props.prioritySelected;
+  let description = null;
+  let assignee = null;
+  let priority = null;
 
-  const [descriptionVal, setDescriptionVal] = useState(descValue);
-  const [email, setEmail] = useState(assignee);
-  const [priority, setPriority] = useState(priorityState);
-  const [status, setStatus] = useState(props.status);
+  if (props.isEditMode) {
+    description = props.descValue;
+    assignee = props.userSelected;
+    priority = props.prioritySelected;
+  } else {
+    description = "";
+    assignee = emails[0];
+    priority = priorities[0];
+  }
+
+  const [descriptionState, setDescriptionState] = useState(description);
+  const [assigneeState, setAssigneeState] = useState(assignee);
+  const [priorityState, setPriorityState] = useState(priority);
+  const [statusState, setStatusState] = useState(props.status);
 
   const onChangeDescHandler = (event) => {
-    setDescriptionVal(event.target.value);
+    setDescriptionState(event.target.value);
   };
 
   const onSelectEmailHandler = (event) => {
-    setEmail(event.target.value);
+    setAssigneeState(event.target.value);
   };
   const onSelectPriorityHandler = (event) => {
-    setPriority(event.target.value);
+    setPriorityState(event.target.value);
   };
   const onSelectStatusHandler = (event) => {
-    setStatus(event.target.value);
+    setStatusState(event.target.value);
   };
 
-  // check later
   const onSubmitingForm = (e) => {
     e.preventDefault();
     const task = {
-      text: descriptionVal,
-      email: email,
-      priority: priority,
+      text: descriptionState,
+      email: assigneeState,
+      priority: priorityState,
       task_id: props.task_id,
       project_id: 1,
-      // uniqe_id: uuid(),
-      status: !status ? "to do" : status,
+      status: statusState === undefined ? "to do" : statusState,
     };
     props.onCreateIssue(task);
   };
 
   const onDeleteTask = (task) => {
     task = {
-      text: descriptionVal,
-      email: email,
-      priority: priority,
+      text: descriptionState,
+      email: assigneeState,
+      priority: priorityState,
       task_id: props.task_id,
       project_id: 1,
-      status: !status ? "to do" : status,
+      status: !statusState ? "to do" : statusState,
     };
     props.delete(task);
   };
 
-  const statusSelect =
-    props.isEditMode === true ? (
-      <select
-        defaultValue={status}
-        onChange={onSelectStatusHandler}
-        className={classes["drop-select-status"]}
-      >
-        <option value="to do">to do</option>
-        <option value="in progress">in progress</option>
-        <option value="code review">code review</option>
-        <option value="done">done</option>
-      </select>
-    ) : null;
+  const statusSelect = props.isEditMode ? (
+    <select
+      defaultValue={statusState}
+      onChange={onSelectStatusHandler}
+      className={classes["drop-select-status"]}
+    >
+      <option value="to do">to do</option>
+      <option value="in progress">in progress</option>
+      <option value="code review">code review</option>
+      <option value="done">done</option>
+    </select>
+  ) : null;
 
   return (
     <Modal onClose={props.onCloseModal}>
@@ -96,9 +90,9 @@ const InputModal = (props) => {
           <label>Description</label>
           <input
             type="text"
-            value={descriptionVal}
+            value={descriptionState}
             placeholder={
-              descriptionVal.length === 0 ? "Write a task" : descriptionVal
+              descriptionState.length === 0 ? "Write a task" : descriptionState
             }
             onChange={onChangeDescHandler}
           />
@@ -114,9 +108,9 @@ const InputModal = (props) => {
               name="assignee"
               onChange={onSelectEmailHandler}
             >
-              {participantsNames.map((name) => {
+              {emails.map((name, id) => {
                 return (
-                  <option key={Math.random()} value={name}>
+                  <option key={id} value={name}>
                     {name}
                   </option>
                 );
@@ -131,9 +125,9 @@ const InputModal = (props) => {
               name="priority"
               onChange={onSelectPriorityHandler}
             >
-              {priorities.map((priority) => {
+              {priorities.map((priority, id) => {
                 return (
-                  <option key={Math.random()} value={priority}>
+                  <option key={id} value={priority}>
                     {priority}
                   </option>
                 );
