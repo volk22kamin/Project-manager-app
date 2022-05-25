@@ -5,6 +5,7 @@
   border: none;
   background-color: #c1d1ee;
   width: 95%;
+  cursor: pointer;
 }
 .text {
   padding-left: 10px;

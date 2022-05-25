@@ -49,7 +49,7 @@ const InputModal = (props) => {
       email: assigneeState,
       priority: priorityState,
       task_id: props.task_id,
-      project_id: 1, // should be dynamic based on 'this' project. naybe through useContext
+      project_id: 1, // should be dynamic based on 'this' project. maybe through useContext
       status: !statusState ? "to do" : statusState,
     };
     props.onCreateIssue(task);

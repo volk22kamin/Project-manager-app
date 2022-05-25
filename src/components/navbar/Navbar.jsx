@@ -15,6 +15,7 @@ const Navbar = (props) => {
   const { name, email } = props.userInfo;
   const onLogoClickHandler = () => {
     console.log("logo clicked");
+    navigate("project_overview");
   };
   const onMyTaskClickHandler = () => {
     console.log("myTask clicked");
