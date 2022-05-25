@@ -1,15 +1,13 @@
 import classes from "./ProfileModal.module.css";
 import ProfilePage from "../../pages/profilePage/ProfilePage";
 import logo from "../../../testProfile.jpg";
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import Profile from "../../profile/Profile";
 import AppContext from "../../../context/Context";
 
 const ProfileModal = (props) => {
   const [showProfileModal, setShowProfileModal] = useState(false);
-  const context = useContext(AppContext);
-
-  const email = context.userLogged && context.userLogged.email;
+  const { userLogged } = useContext(AppContext);
 
   const profileClickHandler = () => {
     if (showProfileModal === true) {
@@ -32,7 +30,7 @@ const ProfileModal = (props) => {
   return (
     <div>
       <div className={classes.profile}>
-        <Profile onClick={profileClickHandler} name={email} />
+        <Profile onClick={profileClickHandler} name={userLogged.email} />
       </div>
       {showProfileModal && (
         <ProfilePage

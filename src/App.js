@@ -10,6 +10,7 @@ import ProjectOverview from "./components/pages/projectOverview/ProjectOverview"
 import "./App.css";
 import WelcomePage from "./components/pages/welcomePage/WelcomePage";
 import MyTasksPage from "./components/pages/myTasksPage/MyTasksPage";
+import AllProjectPage from "./components/pages/allProjectsPage/AllProjectsPage";
 
 let userInfo = {};
 
@@ -84,6 +85,7 @@ function App() {
           />
           <Route path="project_overview" element={<ProjectOverview />} />
           <Route path="myTasks" element={<MyTasksPage />} />
+          <Route path="allProjects" element={<AllProjectPage />} />
         </Routes>
       </AppContext.Provider>
     </Fragment>

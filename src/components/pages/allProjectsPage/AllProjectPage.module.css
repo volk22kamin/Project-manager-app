@@ -1,0 +1,10 @@
+.title {
+  margin-left: 15px;
+}
+.container {
+  background-color: whitesmoke;
+  border: 1px solid pink;
+  border-radius: 7px;
+  padding: 10px;
+  cursor: pointer;
+}

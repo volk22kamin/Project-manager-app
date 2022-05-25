@@ -14,7 +14,7 @@ const Profile = (props) => {
   ];
 
   const color = colors[props.index];
-  const shortName = props.name && props.name.substring(0, 2);
+  const shortName = props.name?.substring(0, 2);
 
   return (
     <Fragment>
