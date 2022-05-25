@@ -8,6 +8,7 @@ const ProjectWrapper = (props) => {
     <Fragment>
       <div className={classes["project-desc"]}>
         <h2>{props.projectName}</h2>
+        <h3>People working on this project:</h3>
         <AllUsersTable usersList={props.usersList}></AllUsersTable>
       </div>
       <div className={classes.wrap}>

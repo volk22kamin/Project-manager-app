@@ -11,6 +11,15 @@ export const getAllTasks = async () => {
   }
 };
 
+export const getTasksByEmail = async (email) => {
+  try {
+    const res = axios.get(APIaddress + "/tasks/" + email);
+    return await res;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const postTask = async (task) => {
   try {
     const res = axios.post(APIaddress + "/tasks", task);
@@ -29,9 +38,9 @@ export const putEditTask = async (task) => {
   }
 };
 
-export const deleteTask = async (task) => {
+export const deleteTask = async (id) => {
   try {
-    const res = axios.delete(`${APIaddress}/tasks/${task.task_id}`);
+    const res = axios.delete(`${APIaddress}/tasks/${id}`);
     return await res;
   } catch (error) {
     console.log("error", error);

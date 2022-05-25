@@ -15,3 +15,7 @@
   justify-content: space-between;
   padding: 5px;
 }
+.third {
+  /* width: 20%; */
+  flex-basis: 18%;
+}

@@ -17,6 +17,10 @@ label {
   font-weight: bold;
   outline: none;
 }
+select {
+  cursor: pointer;
+}
+
 .drop-select {
   width: 40%;
   display: flex;

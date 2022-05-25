@@ -85,8 +85,8 @@ const ProjectOverview = () => {
     setEditTask(false);
   };
 
-  const onDeleteTask = async (task) => {
-    const res = await deleteTask(task);
+  const onDeleteTask = async (id) => {
+    const res = await deleteTask(id);
   };
 
   const onCloseModalHandler = () => {
