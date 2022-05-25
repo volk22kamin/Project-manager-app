@@ -4,10 +4,7 @@ import Tag from "../tag/Tag";
 import Button from "../button/Button";
 import classes from "./InputModal.module.css";
 
-// bugs to check:
-// when changing assignee it dosent change
-// the bug is only visual(the db changes)
-
+// gets props from project overview
 const InputModal = (props) => {
   const emails = props.usersList;
   const priorities = ["none", "epic", "high", "low"];
@@ -52,22 +49,14 @@ const InputModal = (props) => {
       email: assigneeState,
       priority: priorityState,
       task_id: props.task_id,
-      project_id: 1,
-      status: statusState === undefined ? "to do" : statusState,
+      project_id: 1, // should be dynamic based on 'this' project. naybe through useContext
+      status: !statusState ? "to do" : statusState,
     };
     props.onCreateIssue(task);
   };
 
-  const onDeleteTask = (task) => {
-    task = {
-      text: descriptionState,
-      email: assigneeState,
-      priority: priorityState,
-      task_id: props.task_id,
-      project_id: 1,
-      status: !statusState ? "to do" : statusState,
-    };
-    props.delete(task);
+  const onDeleteTask = () => {
+    props.delete(props.task_id);
   };
 
   const statusSelect = props.isEditMode ? (
@@ -108,9 +97,9 @@ const InputModal = (props) => {
               name="assignee"
               onChange={onSelectEmailHandler}
             >
-              {emails.map((name, id) => {
+              {emails.map((name, index) => {
                 return (
-                  <option key={id} value={name}>
+                  <option key={index} value={name}>
                     {name}
                   </option>
                 );
@@ -125,9 +114,9 @@ const InputModal = (props) => {
               name="priority"
               onChange={onSelectPriorityHandler}
             >
-              {priorities.map((priority, id) => {
+              {priorities.map((priority, index) => {
                 return (
-                  <option key={id} value={priority}>
+                  <option key={index} value={priority}>
                     {priority}
                   </option>
                 );
@@ -142,6 +131,7 @@ const InputModal = (props) => {
           ) : null}
           <Button onClick={props.onCloseModal}>Cancel</Button>
         </div>
+
         {/* ------------------------------- */}
       </form>
     </Modal>

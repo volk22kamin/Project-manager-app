@@ -29,9 +29,8 @@ const TaskColumn = (props) => {
               taskNumber={task.task_id}
               priority={task.priority}
               db_id={task._id}
+              assignee={task.email}
               status={task.status}
-              //will be changed later
-              imageSrc={task.assignee}
             />
           );
         })}

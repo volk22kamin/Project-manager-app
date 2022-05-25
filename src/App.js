@@ -9,15 +9,9 @@ import ProjectOverview from "./components/pages/projectOverview/ProjectOverview"
 
 import "./App.css";
 import WelcomePage from "./components/pages/welcomePage/WelcomePage";
+import MyTasksPage from "./components/pages/myTasksPage/MyTasksPage";
 
 let userInfo = {};
-
-// in first log in
-// the user info doesnot show in profile modal
-// until refreshing, also when changing user until
-// refresh still shows the old user
-
-// could be solved!?
 
 function App() {
   const navigate = useNavigate();
@@ -89,6 +83,7 @@ function App() {
             }
           />
           <Route path="project_overview" element={<ProjectOverview />} />
+          <Route path="myTasks" element={<MyTasksPage />} />
         </Routes>
       </AppContext.Provider>
     </Fragment>

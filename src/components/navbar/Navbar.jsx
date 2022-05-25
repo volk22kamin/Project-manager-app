@@ -7,15 +7,18 @@ import profileIcon from "../../testProfile.jpg";
 import logo from "../../logo.png";
 import SearchBar from "./searchBar/SearchBar";
 import ProfilePage from "../pages/profilePage/ProfilePage";
+import { useNavigate } from "react-router-dom";
 
 // gets props from app
 const Navbar = (props) => {
+  const navigate = useNavigate();
   const { name, email } = props.userInfo;
   const onLogoClickHandler = () => {
     console.log("logo clicked");
   };
   const onMyTaskClickHandler = () => {
     console.log("myTask clicked");
+    navigate("myTasks");
   };
 
   const logOut = () => {

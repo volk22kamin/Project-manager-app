@@ -2,6 +2,7 @@ import { Fragment, useState } from "react";
 import Profile from "../profile/Profile";
 import classes from "./AllUsersTable.module.css";
 
+// gets props from ProjectWrapper
 const AllUsersTable = (props) => {
   const [showAll, setShowAll] = useState(false);
 
@@ -15,13 +16,13 @@ const AllUsersTable = (props) => {
               </p>
             ))
           : props.usersList
-              .slice(0, 8)
+              .slice(0, 5)
               .map((name, index) => (
                 <p key={index}>
                   {<Profile index={index} name={name} isList={true} />}
                 </p>
               ))}
-        {props.usersList.length > 8 && (
+        {props.usersList.length > 5 && (
           <span
             onClick={() => setShowAll(!showAll)}
             className={classes["show-more"]}
