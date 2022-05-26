@@ -1,7 +1,7 @@
 import { Fragment } from "react";
-import classes from "./TaskRow.module.css";
+import classes from "./BoxRow.module.css";
 
-const TaskRow = (props) => {
+const BoxRow = (props) => {
   return (
     <Fragment>
       <div className={classes.container}>{props.children}</div>
@@ -9,4 +9,4 @@ const TaskRow = (props) => {
   );
 };
 
-export default TaskRow;
+export default BoxRow;

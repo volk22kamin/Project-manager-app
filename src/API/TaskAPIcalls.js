@@ -11,9 +11,18 @@ export const getAllTasks = async () => {
   }
 };
 
+export const getAllProjectTasks = async (id) => {
+  try {
+    const res = axios.get(APIaddress + "/tasks/byProjectId/" + id);
+    return (await res).data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const getTasksByEmail = async (email) => {
   try {
-    const res = axios.get(APIaddress + "/tasks/" + email);
+    const res = axios.get(APIaddress + "/tasks/byEmail/" + email);
     return await res;
   } catch (error) {
     return error;

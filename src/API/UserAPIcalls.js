@@ -49,3 +49,12 @@ export const getAllEmails = async () => {
     return error;
   }
 };
+
+export const getOneUser = async (email) => {
+  try {
+    const res = await axios.get(APIaddress + "/users/one/" + email);
+    return await res;
+  } catch (error) {
+    return error;
+  }
+};

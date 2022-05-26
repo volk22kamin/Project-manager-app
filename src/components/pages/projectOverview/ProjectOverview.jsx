@@ -8,17 +8,20 @@ import InputModal from "../../InputModal/InputModal";
 import TaskColumnWrapper from "./TaskColumnWrapper";
 
 import {
-  getAllTasks,
   postTask,
   putEditTask,
   deleteTask,
+  getAllProjectTasks,
 } from "../../../API/TaskAPIcalls";
+import { getOneUser } from "../../../API/UserAPIcalls";
+import { updateProjectById } from "../../../API/ProjectAPIcalls";
 
 let taskToChange = {};
 
 const ProjectOverview = () => {
   const context = useContext(AppContext);
-  const emails = context.userEmails.map((user) => user.email);
+  const currentProject = context.currentProject;
+  const emails = currentProject.users.map((user) => user.email);
 
   const allData = {
     todo: [],
@@ -26,9 +29,11 @@ const ProjectOverview = () => {
     codeReview: [],
     done: [],
   };
+  const [users, setUsers] = useState(context.currentProject.users);
+  const [taskArr, setTaskArr] = useState(allData);
+
   const [createIssueOpen, setCreateIssueOpen] = useState(false);
   const [editTask, setEditTask] = useState(false);
-  const [taskArr, setTaskArr] = useState(allData);
 
   const filterToColumns = (tasks) => {
     const cloned = cloneDeep(taskArr);
@@ -48,13 +53,13 @@ const ProjectOverview = () => {
     setTaskArr(cloned);
   };
 
-  const getTasksFromAPI = async () => {
-    const tasks = await getAllTasks();
+  const getTasksFromAPI = async (id) => {
+    const tasks = await getAllProjectTasks(id);
     filterToColumns(tasks);
   };
 
   useEffect(() => {
-    getTasksFromAPI();
+    getTasksFromAPI(currentProject.id);
   }, [editTask, createIssueOpen]);
 
   const onTaskClickHandler = (id, status) => {
@@ -67,6 +72,19 @@ const ProjectOverview = () => {
       })
     );
     setEditTask(true);
+  };
+
+  const onAddUsertoProjectHandler = async (email) => {
+    // add validating that the user is not currently in project
+    const res = await getOneUser(email);
+    const user = res.data;
+    context.currentProject.users = [...context.currentProject.users, user];
+    setUsers(context.currentProject.users);
+    updateProjectById(context.currentProject);
+  };
+
+  const onDeleteUserFromProjHandler = async (user) => {
+    console.log(user);
   };
 
   const onCreateIssue = async (task) => {
@@ -112,6 +130,7 @@ const ProjectOverview = () => {
       {editTask && (
         <InputModal
           usersList={emails}
+          task={taskToChange}
           descValue={taskToChange.text}
           userSelected={taskToChange.email}
           prioritySelected={taskToChange.priority}
@@ -125,7 +144,12 @@ const ProjectOverview = () => {
         />
       )}
 
-      <ProjectWrapper usersList={emails} projectName="First project test">
+      <ProjectWrapper
+        allUsers={context.userEmails}
+        usersList={emails}
+        currentProject={currentProject}
+        addUser={onAddUsertoProjectHandler}
+      >
         <TaskColumnWrapper
           onUpdate={onTaskClickHandler}
           openCreateIssueModal={openModalHandler}

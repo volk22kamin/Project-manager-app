@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Modal from "../modal/Modal";
 import Tag from "../tag/Tag";
 import Button from "../button/Button";
 import classes from "./InputModal.module.css";
+import AppContext from "../../context/Context";
 
 // gets props from project overview
 const InputModal = (props) => {
+  const context = useContext(AppContext);
+  const currentProject = context.currentProject;
+
   const emails = props.usersList;
   const priorities = ["none", "epic", "high", "low"];
 
@@ -49,7 +53,7 @@ const InputModal = (props) => {
       email: assigneeState,
       priority: priorityState,
       task_id: props.task_id,
-      project_id: 1, // should be dynamic based on 'this' project. maybe through useContext
+      project_id: currentProject.id,
       status: !statusState ? "to do" : statusState,
     };
     props.onCreateIssue(task);

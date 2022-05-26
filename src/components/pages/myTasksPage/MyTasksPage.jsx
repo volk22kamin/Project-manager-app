@@ -1,9 +1,8 @@
 import { Fragment, useContext, useEffect, useState } from "react";
 import classes from "./MyTasksPage.module.css";
 import { getTasksByEmail } from "../../../API/TaskAPIcalls";
-import Card from "../../card/Card";
 import Task from "../../task/Task";
-import TaskRow from "../../taskRow/TaskRow";
+import BoxRow from "../../boxRow/BoxRow";
 import AppContext from "../../../context/Context";
 
 const MyTasksPage = (props) => {
@@ -16,7 +15,7 @@ const MyTasksPage = (props) => {
   };
 
   useEffect(() => {
-    const email = context.userLogged && context.userLogged.email;
+    const email = context.userLogged.email;
     getUsersTasks(email);
   }, []);
 
@@ -27,7 +26,7 @@ const MyTasksPage = (props) => {
       <h2 className={classes.title}>my tasks </h2>
       <div>
         <h2 className={classes.title}>project number 1</h2>
-        <TaskRow>
+        <BoxRow>
           {tasks.map((task, index) => (
             <Task
               style={"third"}
@@ -39,9 +38,9 @@ const MyTasksPage = (props) => {
               isMyTasks={true}
             />
           ))}
-        </TaskRow>
+        </BoxRow>
         <h2 className={classes.title}>project number 2</h2>
-        <TaskRow>
+        <BoxRow>
           {tasks.map((task, index) => (
             <Task
               style={"third"}
@@ -53,7 +52,7 @@ const MyTasksPage = (props) => {
               isMyTasks={true}
             />
           ))}
-        </TaskRow>
+        </BoxRow>
       </div>
     </Fragment>
   );

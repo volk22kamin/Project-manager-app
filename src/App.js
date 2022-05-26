@@ -10,6 +10,7 @@ import ProjectOverview from "./components/pages/projectOverview/ProjectOverview"
 import "./App.css";
 import WelcomePage from "./components/pages/welcomePage/WelcomePage";
 import MyTasksPage from "./components/pages/myTasksPage/MyTasksPage";
+import AllProjectPage from "./components/pages/allProjectsPage/AllProjectsPage";
 
 let userInfo = {};
 
@@ -17,6 +18,7 @@ function App() {
   const navigate = useNavigate();
   const context = useContext(AppContext);
   const [isLoggedIn, setIsLoggenIn] = useState(false);
+  // console.log("from app", context.currentProject.users);
 
   const loginOnToken = async (isNew) => {
     const token = localStorage.getItem("token-promger");
@@ -28,7 +30,7 @@ function App() {
       context.userLogged = userInfo;
       navigate("welcome");
       const timer = setTimeout(() => {
-        navigate("project_overview");
+        navigate("allProjects");
       }, 1500);
       return () => clearTimeout(timer);
     } else {
@@ -82,8 +84,12 @@ function App() {
               <WelcomePage name={userInfo.name} isNew={userInfo.isNew} />
             }
           />
-          <Route path="project_overview" element={<ProjectOverview />} />
-          <Route path="myTasks" element={<MyTasksPage />} />
+          <Route
+            path="project_overview"
+            element={isLoggedIn && <ProjectOverview />}
+          />
+          <Route path="myTasks" element={isLoggedIn && <MyTasksPage />} />
+          <Route path="allProjects" element={<AllProjectPage />} />
         </Routes>
       </AppContext.Provider>
     </Fragment>
