@@ -19,7 +19,7 @@ const Profile = (props) => {
   return (
     <Fragment>
       <span
-        onClick={() => props.onClick && props.onClick()}
+        onClick={() => props.onClick && props.onClick(props.name)}
         className={`${classes.profileCircle} ${classes[color]} ${
           props.isList && classes["box-shadow"]
         }`}

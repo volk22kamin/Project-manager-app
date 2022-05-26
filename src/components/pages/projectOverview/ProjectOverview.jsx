@@ -76,6 +76,7 @@ const ProjectOverview = () => {
 
   const onAddUsertoProjectHandler = async (email) => {
     // add validating that the user is not currently in project
+
     const res = await getOneUser(email);
     const user = res.data;
     context.currentProject.users = [...context.currentProject.users, user];
@@ -84,7 +85,8 @@ const ProjectOverview = () => {
   };
 
   const onDeleteUserFromProjHandler = async (user) => {
-    console.log(user);
+    console.log("from proj over", user);
+    // need to alter context.users and 'put' it to the db
   };
 
   const onCreateIssue = async (task) => {
@@ -145,6 +147,7 @@ const ProjectOverview = () => {
       )}
 
       <ProjectWrapper
+        deleteUser={onDeleteUserFromProjHandler}
         allUsers={context.userEmails}
         usersList={emails}
         currentProject={currentProject}

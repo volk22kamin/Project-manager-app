@@ -10,3 +10,7 @@
   display: flex;
   align-items: center;
 }
+.btns {
+  display: flex;
+  justify-content: space-around;
+}
