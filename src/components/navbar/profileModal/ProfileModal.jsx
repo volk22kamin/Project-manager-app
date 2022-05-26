@@ -7,7 +7,8 @@ import AppContext from "../../../context/Context";
 
 const ProfileModal = (props) => {
   const [showProfileModal, setShowProfileModal] = useState(false);
-  const { userLogged } = useContext(AppContext);
+  const context = useContext(AppContext);
+  const email = context.userLogged.email;
 
   const profileClickHandler = () => {
     if (showProfileModal === true) {
@@ -30,7 +31,7 @@ const ProfileModal = (props) => {
   return (
     <div>
       <div className={classes.profile}>
-        <Profile onClick={profileClickHandler} name={userLogged.email} />
+        <Profile onClick={profileClickHandler} name={email} />
       </div>
       {showProfileModal && (
         <ProfilePage

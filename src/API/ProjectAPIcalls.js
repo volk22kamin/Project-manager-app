@@ -10,3 +10,21 @@ export const getAllProjects = async () => {
     return error;
   }
 };
+
+export const updateProjectById = async (project) => {
+  const projectToSend = {
+    name: project.name,
+    id: project.id,
+    users: project.users,
+  };
+  try {
+    const res = axios.put(
+      APIaddress + "/allProjects/addUser/" + project._id,
+      projectToSend
+    );
+    return await res;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};

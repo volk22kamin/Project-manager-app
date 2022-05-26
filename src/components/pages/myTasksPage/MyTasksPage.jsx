@@ -15,7 +15,7 @@ const MyTasksPage = (props) => {
   };
 
   useEffect(() => {
-    const email = context.userLogged && context.userLogged.email;
+    const email = context.userLogged.email;
     getUsersTasks(email);
   }, []);
 

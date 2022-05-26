@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import classes from "./AllProjectPage.module.css";
 import { getAllProjects } from "../../../API/ProjectAPIcalls";
 import BoxRow from "../../boxRow/BoxRow";
@@ -12,10 +12,12 @@ const AllProjectPage = (props) => {
     setProjects(res);
   };
 
+  useEffect(() => {
+    fetchAllProjects();
+  }, []);
   return (
     <Fragment>
-      <h2 className={classes.title}>hello</h2>
-      <button onClick={fetchAllProjects}>fetch</button>
+      <h2 className={classes.title}>My pojects:</h2>
       {/* <Button>Add project</Button> */}
       <BoxRow>
         {projects.map((project, index) => (
@@ -23,6 +25,7 @@ const AllProjectPage = (props) => {
             key={index}
             projectId={project.id}
             name={project.name}
+            proj={project}
           />
         ))}
       </BoxRow>

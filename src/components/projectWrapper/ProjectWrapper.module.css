@@ -7,11 +7,23 @@
 .wrap .project-desc {
 }
 .project-desc {
-  padding-left: 45px;
+  padding: 0px 45px 0px 45px;
 }
 .projectWrapper {
   width: 85%;
   padding: 10px;
   display: flex;
   justify-content: space-between;
+}
+.users {
+  /* background-color: aqua; */
+  display: flex;
+  justify-content: space-between;
+}
+.select {
+  outline: none;
+  height: 45px;
+  font-size: 18px;
+  background-color: whitesmoke;
+  border: none;
 }
