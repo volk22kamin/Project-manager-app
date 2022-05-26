@@ -6,7 +6,12 @@ import classes from "./ProjectWrapper.module.css";
 const ProjectWrapper = (props) => {
   const addUserHandler = (event) => {
     const emailToAdd = event.target.value;
-    props.addUser(emailToAdd);
+    if (emailToAdd !== "null") {
+      props.addUser(emailToAdd);
+    }
+  };
+  const deleteUser = (email) => {
+    props.deleteUser(email);
   };
   return (
     <Fragment>
@@ -14,10 +19,14 @@ const ProjectWrapper = (props) => {
         <h2>{props.currentProject.name}</h2>
         <h3>People working on this project:</h3>
         <div className={classes.users}>
-          <AllUsersTable usersList={props.usersList}></AllUsersTable>
+          <AllUsersTable
+            deleteUser={deleteUser}
+            usersList={props.usersList}
+          ></AllUsersTable>
           <div>
             <h3>Add users to the project</h3>
             <select className={classes.select} onChange={addUserHandler}>
+              <option value="null">choose a user</option>
               {props.allUsers.map((user, index) => (
                 <option key={index} value={user.email}>
                   {user.email}
