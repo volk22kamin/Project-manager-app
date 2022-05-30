@@ -20,6 +20,8 @@ let taskToChange = {};
 
 // for now when deleting a user from a oroject
 // this does not affect the tasks assignd to him
+
+// when pressing promgr logo and theres no current project crashes
 const ProjectOverview = () => {
   const context = useContext(AppContext);
   const currentProject = context.currentProject;
