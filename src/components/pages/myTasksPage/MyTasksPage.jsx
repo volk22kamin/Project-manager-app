@@ -23,12 +23,10 @@ const MyTasksPage = (props) => {
     setTasks(res.data);
   };
 
-  console.log(projects);
   useEffect(() => {
     fetchAllProjects();
     const email = context.userLogged.email;
     getUsersTasks(email);
-    console.log(projects);
   }, []);
 
   // so depends on the sum of projects i have,
@@ -37,37 +35,28 @@ const MyTasksPage = (props) => {
     <Fragment>
       <h2 className={classes.title}>my tasks </h2>
       <div>
-        <h2 className={classes.title}>project number 1</h2>
-        {projects.map((element) => {
-          return <BoxRow></BoxRow>;
+        {projects.map((project, index) => {
+          return (
+            <div key={index}>
+              <h2 className={classes.title}>{project.name}</h2>
+              <BoxRow>
+                {tasks
+                  .filter((task) => task.project_id === project.id)
+                  .map((task, index) => (
+                    <Task
+                      style={"third"}
+                      key={index}
+                      taskText={task.text}
+                      assignee={task.email}
+                      priority={task.priority}
+                      status={task.status}
+                      isMyTasks={true}
+                    />
+                  ))}
+              </BoxRow>
+            </div>
+          );
         })}
-        <BoxRow>
-          {tasks.map((task, index) => (
-            <Task
-              style={"third"}
-              key={index}
-              taskText={task.text}
-              assignee={task.email}
-              priority={task.priority}
-              status={task.status}
-              isMyTasks={true}
-            />
-          ))}
-        </BoxRow>
-        <h2 className={classes.title}>project number 2</h2>
-        <BoxRow>
-          {tasks.map((task, index) => (
-            <Task
-              style={"third"}
-              key={index}
-              taskText={task.text}
-              assignee={task.email}
-              priority={task.priority}
-              status={task.status}
-              isMyTasks={true}
-            />
-          ))}
-        </BoxRow>
       </div>
     </Fragment>
   );
