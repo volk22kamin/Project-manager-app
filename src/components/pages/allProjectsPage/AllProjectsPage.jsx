@@ -5,6 +5,9 @@ import BoxRow from "../../boxRow/BoxRow";
 import ProjectPreviewBox from "./ProjectPreviewBox";
 import Button from "../../button/Button";
 
+// fro now fetching all project
+// need to fetch only projects that the
+// user is assigned to them
 const AllProjectPage = (props) => {
   const [projects, setProjects] = useState([]);
   const fetchAllProjects = async () => {
