@@ -31,7 +31,7 @@ function App() {
       navigate("welcome");
       const timer = setTimeout(() => {
         navigate("allProjects");
-      }, 1500);
+      }, 800);
       return () => clearTimeout(timer);
     } else {
       console.log("token not available");

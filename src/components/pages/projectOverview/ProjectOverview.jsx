@@ -13,7 +13,7 @@ import {
   deleteTask,
   getAllProjectTasks,
 } from "../../../API/TaskAPIcalls";
-import { getOneUser } from "../../../API/UserAPIcalls";
+import { getOneUser, editUser } from "../../../API/UserAPIcalls";
 import { updateProjectById } from "../../../API/ProjectAPIcalls";
 
 let taskToChange = {};
@@ -95,6 +95,9 @@ const ProjectOverview = () => {
       context.currentProject.users = [...context.currentProject.users, user];
       setUsers(context.currentProject.users);
       updateProjectById(context.currentProject);
+      // adding the project id to the user projects
+      user.projects = [...user.projects, currentProject._id];
+      const userEdited = await editUser(user);
     }
   };
 
@@ -113,6 +116,7 @@ const ProjectOverview = () => {
       console.log(res.response.data[0].message);
     }
     setCreateIssueOpen(false);
+    console.log(taskArr);
   };
 
   const onEditTask = async (task) => {

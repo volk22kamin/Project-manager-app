@@ -1,10 +1,13 @@
 import Card from "../../card/Card";
 import InputForm from "./inputForm/InputForm";
 import classes from "./inputForm/InputForm.module.css";
-import { loginHandler, registerHandler } from "../../../API/UserAPIcalls";
+import {
+  editUser,
+  loginHandler,
+  registerHandler,
+} from "../../../API/UserAPIcalls";
 import { useState } from "react";
-import Modal from "../../modal/Modal";
-import Button from "../../button/Button";
+
 import ErrorModal from "../../errorModal/ErrorModal";
 
 let errorMsg = "";
@@ -35,8 +38,21 @@ const LoginPage = (props) => {
     setModalOpen(false);
   };
 
+  // just checking
+  const newUser = () => {
+    const loginData = {
+      email: "volk@gmail.com",
+      name: "volk",
+      password: "volk22",
+      _id: "628681bd4f4c2c2e1c054398",
+      projects: ["vsvvsav", "vwag5sd"],
+    };
+    editUser(loginData);
+  };
+
   return (
     <div>
+      <button onClick={newUser}>new user</button>
       {modalOpen ? (
         <ErrorModal
           errorMsg={errorMsg}

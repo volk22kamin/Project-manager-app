@@ -55,6 +55,16 @@ export const getOneUser = async (email) => {
     const res = await axios.get(APIaddress + "/users/one/" + email);
     return await res;
   } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+export const editUser = async (user) => {
+  try {
+    const res = await axios.put(APIaddress + "/users/" + user._id, user);
+    return res.data;
+  } catch (error) {
     return error;
   }
 };

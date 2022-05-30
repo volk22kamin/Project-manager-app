@@ -20,11 +20,11 @@ const TaskColumn = (props) => {
         )}
       </header>
       <div className={classes["column-body"]}>
-        {props.tasks.map((task) => {
+        {props.tasks.map((task, index) => {
           return (
             <Task
               onUpdate={onTaskUpdateHandler}
-              key={Math.random()}
+              key={index}
               taskText={task.text}
               taskNumber={task.task_id}
               priority={task.priority}

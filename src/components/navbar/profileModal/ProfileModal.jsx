@@ -27,7 +27,6 @@ const ProfileModal = (props) => {
     props.logOut();
   };
 
-  // check why sending context.logged.email does not work without checking he's there
   return (
     <div>
       <div className={classes.profile}>

@@ -4,16 +4,20 @@ import Button from "../../button/Button";
 import Profile from "../../profile/Profile";
 import AppContext from "../../../context/Context";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ProfilePage = (props) => {
   const context = useContext(AppContext);
+  const navigate = useNavigate();
+
   const onMyTasksClickHandler = () => {
-    console.log("My Tasks clicked");
+    navigate("myTasks");
   };
+
   const onLogOutClickHandler = () => {
-    console.log("Log out clicked");
     props.logOut();
   };
+
   const onCloseProfileHandler = () => {
     props.onCloseProfile();
   };

@@ -38,11 +38,20 @@ const AllProjectPage = (props) => {
     <Fragment>
       {openModal && (
         <Modal>
-          <form onSubmit={onCreateProjectHandler}>
-            <label htmlFor="projectName">project name</label>
-            <input type="text" onChange={onChangeINputHandler} />
-            <Button type="submit">Save</Button>
-            <Button onClick={() => setOpenModal(false)}>Cancel</Button>
+          <form
+            className={classes.addProjectModal}
+            onSubmit={onCreateProjectHandler}
+          >
+            <div className={classes.input}>
+              <label htmlFor="projectName">project name:</label>
+              <input type="text" onChange={onChangeINputHandler} />
+            </div>
+            <div className={classes.btns}>
+              <Button type="submit">Save</Button>
+              <Button type="button" onClick={() => setOpenModal(false)}>
+                Cancel
+              </Button>
+            </div>
           </form>
         </Modal>
       )}
