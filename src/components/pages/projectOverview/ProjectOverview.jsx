@@ -18,6 +18,8 @@ import { updateProjectById } from "../../../API/ProjectAPIcalls";
 
 let taskToChange = {};
 
+// for now when deleting a user from a oroject
+// this does not affect the tasks assignd to him
 const ProjectOverview = () => {
   const context = useContext(AppContext);
   const currentProject = context.currentProject;
@@ -74,19 +76,33 @@ const ProjectOverview = () => {
     setEditTask(true);
   };
 
-  const onAddUsertoProjectHandler = async (email) => {
-    // add validating that the user is not currently in project
-
-    const res = await getOneUser(email);
-    const user = res.data;
-    context.currentProject.users = [...context.currentProject.users, user];
-    setUsers(context.currentProject.users);
-    updateProjectById(context.currentProject);
+  const findUser = (email) => {
+    let found = false;
+    currentProject.users.forEach((user) => {
+      if (user.email.localeCompare(email) === 0) {
+        found = true;
+      }
+    });
+    return found;
   };
 
-  const onDeleteUserFromProjHandler = async (user) => {
-    console.log("from proj over", user);
-    // need to alter context.users and 'put' it to the db
+  const onAddUsertoProjectHandler = async (email) => {
+    if (!findUser(email)) {
+      const res = await getOneUser(email);
+      const user = res.data;
+      context.currentProject.users = [...context.currentProject.users, user];
+      setUsers(context.currentProject.users);
+      updateProjectById(context.currentProject);
+    }
+  };
+
+  const onDeleteUserFromProjHandler = async (email) => {
+    const filtered = currentProject.users.filter(
+      (user) => user.email !== email
+    );
+    currentProject.users = filtered;
+    setUsers(filtered);
+    updateProjectById(currentProject);
   };
 
   const onCreateIssue = async (task) => {
