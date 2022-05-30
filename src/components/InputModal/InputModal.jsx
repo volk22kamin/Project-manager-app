@@ -23,7 +23,8 @@ const InputModal = (props) => {
     priority = props.prioritySelected;
   } else {
     description = "";
-    assignee = emails[0];
+    // should be changed later
+    assignee = "none@gmail.com";
     priority = priorities[0];
   }
 
@@ -37,7 +38,10 @@ const InputModal = (props) => {
   };
 
   const onSelectEmailHandler = (event) => {
-    setAssigneeState(event.target.value);
+    // fix the problem of getting null and cannot send cuz it is not an email
+    const value = event.target.value;
+    if (value === "null") setAssigneeState("null@gmail.com");
+    else setAssigneeState(event.target.value);
   };
   const onSelectPriorityHandler = (event) => {
     setPriorityState(event.target.value);
@@ -101,6 +105,7 @@ const InputModal = (props) => {
               name="assignee"
               onChange={onSelectEmailHandler}
             >
+              <option value="null">none</option>
               {emails.map((name, index) => {
                 return (
                   <option key={index} value={name}>

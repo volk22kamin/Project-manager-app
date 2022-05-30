@@ -11,7 +11,6 @@ const AllUsersTable = (props) => {
   const [showModal, setShowModal] = useState(false);
 
   const removeUserHandler = () => {
-    console.log("removed", userToDelete);
     setShowModal(false);
     props.deleteUser(userToDelete);
   };
