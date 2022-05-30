@@ -63,7 +63,7 @@ const ProjectOverview = () => {
   };
 
   useEffect(() => {
-    getTasksFromAPI(currentProject.id);
+    getTasksFromAPI(currentProject._id);
   }, [editTask, createIssueOpen]);
 
   const onTaskClickHandler = (id, status) => {

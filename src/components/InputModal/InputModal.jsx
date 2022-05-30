@@ -57,7 +57,7 @@ const InputModal = (props) => {
       email: assigneeState,
       priority: priorityState,
       task_id: props.task_id,
-      project_id: currentProject.id,
+      project_id: currentProject._id,
       status: !statusState ? "to do" : statusState,
     };
     props.onCreateIssue(task);
