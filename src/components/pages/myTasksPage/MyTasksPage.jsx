@@ -10,9 +10,9 @@ import { getAllProjects } from "../../../API/ProjectAPIcalls";
 const MyTasksPage = (props) => {
   const [tasks, setTasks] = useState([]);
 
+  const [projects, setProjects] = useState([]);
   const context = useContext(AppContext);
 
-  const [projects, setProjects] = useState([]);
   const fetchAllProjects = async () => {
     const res = await getAllProjects();
     setProjects(res);
@@ -29,8 +29,6 @@ const MyTasksPage = (props) => {
     getUsersTasks(email);
   }, []);
 
-  // so depends on the sum of projects i have,
-  // i have to map task row, and inside them map task
   return (
     <Fragment>
       <h2 className={classes.title}>my tasks </h2>
@@ -41,7 +39,7 @@ const MyTasksPage = (props) => {
               <h2 className={classes.title}>{project.name}</h2>
               <BoxRow>
                 {tasks
-                  .filter((task) => task.project_id === project.id)
+                  .filter((task) => task.project_id === project._id)
                   .map((task, index) => (
                     <Task
                       style={"third"}

@@ -28,3 +28,9 @@ export const updateProjectById = async (project) => {
     return error;
   }
 };
+
+export const createProject = async (name) => {
+  const res = axios.post(APIaddress + "/allProjects", { name: name });
+  console.log(await res);
+  // add try catch and return later
+};
