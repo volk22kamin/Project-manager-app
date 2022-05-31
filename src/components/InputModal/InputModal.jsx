@@ -47,7 +47,9 @@ const InputModal = (props) => {
     setPriorityState(event.target.value);
   };
   const onSelectStatusHandler = (event) => {
-    setStatusState(event.target.value);
+    const statusSelected = event.target.value;
+    setStatusState(statusSelected);
+    setAssigneeState(context.userLogged.email);
   };
 
   const onSubmitingForm = (e) => {
@@ -138,7 +140,9 @@ const InputModal = (props) => {
           {props.isEditMode ? (
             <Button onClick={onDeleteTask}>Delete</Button>
           ) : null}
-          <Button onClick={props.onCloseModal}>Cancel</Button>
+          <Button type="button" onClick={props.onCloseModal}>
+            Cancel
+          </Button>
         </div>
 
         {/* ------------------------------- */}
