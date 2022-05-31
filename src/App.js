@@ -18,7 +18,6 @@ function App() {
   const navigate = useNavigate();
   const context = useContext(AppContext);
   const [isLoggedIn, setIsLoggenIn] = useState(false);
-  // console.log("from app", context.currentProject.users);
 
   const loginOnToken = async (isNew) => {
     const token = localStorage.getItem("token-promger");

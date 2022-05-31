@@ -21,7 +21,7 @@ let taskToChange = {};
 // for now when deleting a user from a oroject
 // this does not affect the tasks assignd to him
 
-// when pressing promgr logo and theres no current project crashes
+// when pressing promgr logo and theres no current project - crashes
 const ProjectOverview = () => {
   const context = useContext(AppContext);
   const currentProject = context.currentProject;
@@ -95,13 +95,15 @@ const ProjectOverview = () => {
       context.currentProject.users = [...context.currentProject.users, user];
       setUsers(context.currentProject.users);
       updateProjectById(context.currentProject);
-      // adding the project id to the user projects
+      // adding the project id to the user projects array
       user.projects = [...user.projects, currentProject._id];
       const userEdited = await editUser(user);
     }
   };
 
+  // need to find the user and edit projects array to delete current project id
   const onDeleteUserFromProjHandler = async (email) => {
+    console.log("emai", email);
     const filtered = currentProject.users.filter(
       (user) => user.email !== email
     );

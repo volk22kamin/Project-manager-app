@@ -1,41 +1,50 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import classes from "./AllProjectPage.module.css";
 import { getAllProjects } from "../../../API/ProjectAPIcalls";
 import BoxRow from "../../boxRow/BoxRow";
 import ProjectPreviewBox from "./ProjectPreviewBox";
 import Button from "../../button/Button";
-import { createProject } from "../../../API/ProjectAPIcalls";
+import { createProject, getProjectsByUser } from "../../../API/ProjectAPIcalls";
 import Modal from "../../modal/Modal";
+import AppContext from "../../../context/Context";
 
-// fro now fetching all project
-// need to fetch only projects that the
-// user is assigned to them
 const AllProjectPage = (props) => {
-  const [projects, setProjects] = useState([]);
+  const context = useContext(AppContext);
+  const userLoggedProjects = context.userLogged && context.userLogged.projects;
+
+  const [allProjects, setAllProjects] = useState([]);
+  const [myProjects, setMyProjects] = useState(userLoggedProjects);
   const [openModal, setOpenModal] = useState(false);
   const [projectName, setProjectName] = useState("");
 
   const fetchAllProjects = async () => {
     const res = await getAllProjects();
-    setProjects(res);
+    setAllProjects(res);
   };
 
+  const fetchUsersProject = async () => {
+    const projects = await getProjectsByUser(context.userLogged);
+    setMyProjects(projects);
+  };
   useEffect(() => {
     fetchAllProjects();
+    fetchUsersProject();
   }, []);
 
   const onChangeINputHandler = (event) => {
     setProjectName(event.target.value);
   };
 
-  const onCreateProjectHandler = (event) => {
+  const onCreateProjectHandler = async (event) => {
     event.preventDefault();
-    createProject(projectName);
+    const project = await createProject(projectName);
+    setAllProjects([...allProjects, project]);
     setOpenModal(false);
   };
 
   return (
     <Fragment>
+      <button onClick={fetchUsersProject}>getUser</button>
       {openModal && (
         <Modal>
           <form
@@ -55,10 +64,24 @@ const AllProjectPage = (props) => {
           </form>
         </Modal>
       )}
+      <Button style="margin" onClick={() => setOpenModal(true)}>
+        Add project
+      </Button>
       <h2 className={classes.title}>My pojects:</h2>
-      <Button onClick={() => setOpenModal(true)}>Add project</Button>
       <BoxRow>
-        {projects.map((project, index) => (
+        {myProjects &&
+          myProjects.map((project, index) => (
+            <ProjectPreviewBox
+              key={index}
+              projectId={project.id}
+              name={project.name}
+              proj={project}
+            />
+          ))}
+      </BoxRow>
+      <h2 className={classes.title}>All projects:</h2>
+      <BoxRow>
+        {allProjects.map((project, index) => (
           <ProjectPreviewBox
             key={index}
             projectId={project.id}
