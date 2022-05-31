@@ -16,6 +16,10 @@ const Profile = (props) => {
   const color = colors[props.index];
   const shortName = props.name?.substring(0, 2);
 
+  // const onCLickHandler = () => {
+  //   props.onClick(props.name, props._id)
+  // }
+
   return (
     <Fragment>
       <span

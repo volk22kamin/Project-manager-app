@@ -3,25 +3,23 @@ const APIaddress = "http://localhost:3002";
 
 export const getAllProjects = async () => {
   try {
-    const res = axios.get(APIaddress + "/allProjects");
-    // console.log((await res).data);
+    const res = axios.get(APIaddress + "/projects");
     return (await res).data;
   } catch (error) {
     return error;
   }
 };
 
-// work on thar today
-// find user, then find the project that have the same _id as the id's in the projects array of the user
 export const getProjectsByUser = async (user) => {
   try {
-    const res = axios.get(APIaddress + "/allProjects/" + user._id);
-    console.log(await res);
+    const res = axios.get(APIaddress + "/projects/perUser/" + user._id);
+    return (await res).data;
   } catch (error) {
     return error;
   }
 };
 
+// need to better this function
 export const updateProjectById = async (project) => {
   const projectToSend = {
     name: project.name,
@@ -30,7 +28,7 @@ export const updateProjectById = async (project) => {
   };
   try {
     const res = axios.put(
-      APIaddress + "/allProjects/addUser/" + project._id,
+      APIaddress + "/projects/addUser/" + project._id,
       projectToSend
     );
     return await res;
@@ -41,7 +39,8 @@ export const updateProjectById = async (project) => {
 };
 
 export const createProject = async (name) => {
-  const res = axios.post(APIaddress + "/allProjects", { name: name });
+  const res = axios.post(APIaddress + "/projects", { name: name });
   console.log(await res);
+  return (await res).data;
   // add try catch and return later
 };

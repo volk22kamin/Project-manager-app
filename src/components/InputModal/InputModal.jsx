@@ -49,7 +49,9 @@ const InputModal = (props) => {
   const onSelectStatusHandler = (event) => {
     const statusSelected = event.target.value;
     setStatusState(statusSelected);
-    setAssigneeState(context.userLogged.email);
+    if (props.status === "to do") {
+      setAssigneeState(context.userLogged.email);
+    }
   };
 
   const onSubmitingForm = (e) => {

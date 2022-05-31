@@ -14,3 +14,6 @@
   cursor: pointer;
   transform: scale(1.03);
 }
+.margin {
+  margin: 15px 15px 0px 15px;
+}
