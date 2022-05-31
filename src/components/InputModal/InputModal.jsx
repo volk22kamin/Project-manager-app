@@ -40,14 +40,16 @@ const InputModal = (props) => {
   const onSelectEmailHandler = (event) => {
     // fix the problem of getting null and cannot send cuz it is not an email
     const value = event.target.value;
-    if (value === "null") setAssigneeState("null@gmail.com");
+    if (value === "none") setAssigneeState("none@gmail.com");
     else setAssigneeState(event.target.value);
   };
   const onSelectPriorityHandler = (event) => {
     setPriorityState(event.target.value);
   };
   const onSelectStatusHandler = (event) => {
-    setStatusState(event.target.value);
+    const statusSelected = event.target.value;
+    setStatusState(statusSelected);
+    setAssigneeState(context.userLogged.email);
   };
 
   const onSubmitingForm = (e) => {
@@ -105,7 +107,7 @@ const InputModal = (props) => {
               name="assignee"
               onChange={onSelectEmailHandler}
             >
-              <option value="null">none</option>
+              <option value="none">none</option>
               {emails.map((name, index) => {
                 return (
                   <option key={index} value={name}>
@@ -138,7 +140,9 @@ const InputModal = (props) => {
           {props.isEditMode ? (
             <Button onClick={onDeleteTask}>Delete</Button>
           ) : null}
-          <Button onClick={props.onCloseModal}>Cancel</Button>
+          <Button type="button" onClick={props.onCloseModal}>
+            Cancel
+          </Button>
         </div>
 
         {/* ------------------------------- */}

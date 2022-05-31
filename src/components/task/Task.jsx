@@ -4,6 +4,7 @@ import classes from "./Task.module.css";
 
 // for now gets the props from taskColumn
 const Task = (props) => {
+  // console.log(props.assignee);
   const onTaskClickHandler = () => {
     props.onUpdate(props.taskNumber, props.status);
   };
@@ -15,12 +16,13 @@ const Task = (props) => {
     >
       <p className={classes.text}>{props.taskText}</p>
       <footer className={classes.footer}>
-        {/* <Tag>{props.taskNumber}</Tag> */}
         <Tag>{props.priority}</Tag>
         {props.isMyTasks && (
           <Tag isMyTasks={props.isMyTasks}>{props.status}</Tag>
         )}
-        <Profile name={props.assignee} />
+        {props.assignee !== "none@gmail.com" && (
+          <Profile name={props.assignee} />
+        )}
       </footer>
     </div>
   );

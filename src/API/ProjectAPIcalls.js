@@ -11,6 +11,17 @@ export const getAllProjects = async () => {
   }
 };
 
+// work on thar today
+// find user, then find the project that have the same _id as the id's in the projects array of the user
+export const getProjectsByUser = async (user) => {
+  try {
+    const res = axios.get(APIaddress + "/allProjects/" + user._id);
+    console.log(await res);
+  } catch (error) {
+    return error;
+  }
+};
+
 export const updateProjectById = async (project) => {
   const projectToSend = {
     name: project.name,
