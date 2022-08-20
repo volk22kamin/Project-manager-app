@@ -13,7 +13,11 @@ import {
   deleteTask,
   getAllProjectTasks,
 } from "../../../API/TaskAPIcalls";
-import { getOneUser, editUser } from "../../../API/UserAPIcalls";
+import {
+  getOneUser,
+  editUser,
+  editUserByEmail,
+} from "../../../API/UserAPIcalls";
 import { updateProjectById } from "../../../API/ProjectAPIcalls";
 
 let taskToChange = {};
@@ -101,15 +105,35 @@ const ProjectOverview = () => {
     }
   };
 
-  // need to find the user and edit projects array to delete current project id
   const onDeleteUserFromProjHandler = async (email) => {
-    console.log("emai", email);
     const filtered = currentProject.users.filter(
       (user) => user.email !== email
     );
     currentProject.users = filtered;
     setUsers(filtered);
     updateProjectById(currentProject);
+    removeProjectFromUser(email);
+  };
+
+  const removeProjectFromUser = async (email) => {
+    let user = null;
+
+    try {
+      user = (await getOneUser(email)).data;
+      const currentProjectId = currentProject._id;
+      const updatedUserProjects = user.projects.filter((project) => {
+        return project !== currentProjectId;
+      });
+      user.projects = [...updatedUserProjects];
+    } catch (error) {
+      console.log(error);
+    }
+
+    try {
+      editUser(user);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const onCreateIssue = async (task) => {
