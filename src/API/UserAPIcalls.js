@@ -68,3 +68,14 @@ export const editUser = async (user) => {
     return error;
   }
 };
+
+export const editUserByEmail = async (user) => {
+  console.log(user.email);
+  try {
+    const res = await axios.put(APIaddress + "/users/one/" + user.email);
+
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+};

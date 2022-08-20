@@ -44,7 +44,6 @@ const AllProjectPage = (props) => {
 
   return (
     <Fragment>
-      <button onClick={fetchUsersProject}>getUser</button>
       {openModal && (
         <Modal>
           <form
@@ -67,18 +66,22 @@ const AllProjectPage = (props) => {
       <Button style="margin" onClick={() => setOpenModal(true)}>
         Add project
       </Button>
-      <h2 className={classes.title}>My pojects:</h2>
-      <BoxRow>
-        {myProjects &&
-          myProjects.map((project, index) => (
-            <ProjectPreviewBox
-              key={index}
-              projectId={project.id}
-              name={project.name}
-              proj={project}
-            />
-          ))}
-      </BoxRow>
+      {myProjects.length && (
+        <div>
+          <h2 className={classes.title}>My pojects:</h2>
+          <BoxRow>
+            {myProjects.map((project, index) => (
+              <ProjectPreviewBox
+                key={index}
+                projectId={project.id}
+                name={project.name}
+                proj={project}
+              />
+            ))}
+          </BoxRow>
+        </div>
+      )}
+
       <h2 className={classes.title}>All projects:</h2>
       <BoxRow>
         {allProjects.map((project, index) => (
