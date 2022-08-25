@@ -1,5 +1,5 @@
-import { useState } from "react";
-
+import { useState, useContext } from "react";
+import AppContext from "../../context/Context";
 import ProfileModal from "./profileModal/ProfileModal";
 import classes from "./Navbar.module.css";
 import logo from "../../logo.png";
@@ -9,10 +9,15 @@ import { useNavigate } from "react-router-dom";
 // gets props from app
 const Navbar = (props) => {
   const navigate = useNavigate();
+  const context = useContext(AppContext);
+
+  const currentProject = context.currentProject;
 
   const onLogoClickHandler = () => {
-    console.log("logo clicked");
-    navigate("project_overview");
+    if (currentProject._id) {
+      console.log(currentProject);
+      navigate("project_overview");
+    }
   };
   const onMyTaskClickHandler = () => {
     console.log("myTask clicked");
@@ -21,6 +26,7 @@ const Navbar = (props) => {
 
   const onProjectsClickHandler = () => {
     console.log("projects clicked");
+
     navigate("allProjects");
   };
 

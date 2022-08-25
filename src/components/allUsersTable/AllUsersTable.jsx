@@ -1,12 +1,15 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useContext } from "react";
 import Button from "../button/Button";
 import Modal from "../modal/Modal";
 import Profile from "../profile/Profile";
 import classes from "./AllUsersTable.module.css";
+import AppContext from "../../context/Context";
 
 let userToDelete = "";
 // gets props from ProjectWrapper
 const AllUsersTable = (props) => {
+  const context = useContext(AppContext);
+
   const [showAll, setShowAll] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
@@ -16,6 +19,7 @@ const AllUsersTable = (props) => {
   };
 
   const clickOnUserHandler = (email) => {
+    if (!context.userLogged.isAdmin) return;
     userToDelete = email;
     setShowModal(true);
   };

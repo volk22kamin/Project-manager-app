@@ -2,8 +2,13 @@ import { Fragment } from "react";
 import AllUsersTable from "../allUsersTable/AllUsersTable";
 import classes from "./ProjectWrapper.module.css";
 
-// gets props from app nad project overvie
+import { useContext } from "react";
+import AppContext from "../../context/Context";
+
+// gets props from app and project overview
 const ProjectWrapper = (props) => {
+  const context = useContext(AppContext);
+  const currentProject = context.currentProject;
   const addUserHandler = (event) => {
     const emailToAdd = event.target.value;
     if (emailToAdd !== "null") {
@@ -23,17 +28,19 @@ const ProjectWrapper = (props) => {
             deleteUser={deleteUser}
             usersList={props.usersList}
           ></AllUsersTable>
-          <div>
-            <h3>Add users to the project</h3>
-            <select className={classes.select} onChange={addUserHandler}>
-              <option value="null">choose a user</option>
-              {props.allUsers.map((user, index) => (
-                <option key={index} value={user.email}>
-                  {user.email}
-                </option>
-              ))}
-            </select>
-          </div>
+          {context.userLogged.isAdmin && (
+            <div>
+              <h3>Add users to the project</h3>
+              <select className={classes.select} onChange={addUserHandler}>
+                <option value="null">choose a user</option>
+                {props.allUsers.map((user, index) => (
+                  <option key={index} value={user.email}>
+                    {user.email}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
         </div>
       </div>
       <div className={classes.wrap}>

@@ -36,6 +36,7 @@ const AllProjectPage = (props) => {
   };
 
   const onCreateProjectHandler = async (event) => {
+    console.log("create");
     event.preventDefault();
     const project = await createProject(projectName);
     setAllProjects([...allProjects, project]);
@@ -63,9 +64,11 @@ const AllProjectPage = (props) => {
           </form>
         </Modal>
       )}
-      <Button style="margin" onClick={() => setOpenModal(true)}>
-        Add project
-      </Button>
+      {context.userLogged.isAdmin && (
+        <Button style="margin" onClick={() => setOpenModal(true)}>
+          Add project
+        </Button>
+      )}
       {myProjects.length && (
         <div>
           <h2 className={classes.title}>My pojects:</h2>
