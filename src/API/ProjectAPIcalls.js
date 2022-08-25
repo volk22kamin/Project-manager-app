@@ -44,3 +44,13 @@ export const createProject = async (name) => {
   return (await res).data;
   // add try catch and return later
 };
+
+export const removeAssigndUserFromTasks = async (email, id) => {
+  const res = axios.delete(APIaddress + "/tasks/project/" + id, {
+    data: {
+      email: email,
+    },
+  });
+
+  return res;
+};

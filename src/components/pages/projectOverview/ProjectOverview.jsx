@@ -18,7 +18,10 @@ import {
   editUser,
   editUserByEmail,
 } from "../../../API/UserAPIcalls";
-import { updateProjectById } from "../../../API/ProjectAPIcalls";
+import {
+  updateProjectById,
+  removeAssigndUserFromTasks,
+} from "../../../API/ProjectAPIcalls";
 
 let taskToChange = {};
 
@@ -110,9 +113,18 @@ const ProjectOverview = () => {
       (user) => user.email !== email
     );
     currentProject.users = filtered;
-    setUsers(filtered);
     updateProjectById(currentProject);
     removeProjectFromUser(email);
+    removeUserFromTasks(email);
+    setUsers(filtered);
+  };
+
+  const removeUserFromTasks = async (userEmail) => {
+    try {
+      await removeAssigndUserFromTasks(userEmail, currentProject._id);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const removeProjectFromUser = async (email) => {
