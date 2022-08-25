@@ -25,9 +25,6 @@ import {
 
 let taskToChange = {};
 
-// for now when deleting a user from a oroject
-// this does not affect the tasks assignd to him
-
 // when pressing promgr logo and theres no current project - crashes
 const ProjectOverview = () => {
   const context = useContext(AppContext);
@@ -117,6 +114,7 @@ const ProjectOverview = () => {
     removeProjectFromUser(email);
     removeUserFromTasks(email);
     setUsers(filtered);
+    getTasksFromAPI(currentProject._id);
   };
 
   const removeUserFromTasks = async (userEmail) => {
