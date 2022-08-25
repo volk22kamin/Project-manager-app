@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
+import AppContext from "../../../context/Context";
 import { Fragment } from "react";
 import cloneDeep from "lodash.clonedeep";
-import AppContext from "../../../context/Context";
 
 import ProjectWrapper from "../../projectWrapper/ProjectWrapper";
 import InputModal from "../../InputModal/InputModal";
@@ -112,9 +112,9 @@ const ProjectOverview = () => {
     currentProject.users = filtered;
     updateProjectById(currentProject);
     removeProjectFromUser(email);
-    removeUserFromTasks(email);
-    setUsers(filtered);
+    await removeUserFromTasks(email);
     getTasksFromAPI(currentProject._id);
+    setUsers(filtered);
   };
 
   const removeUserFromTasks = async (userEmail) => {
