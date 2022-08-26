@@ -13,7 +13,6 @@ const ProjectPreviewBox = (props) => {
   };
   return (
     <div onClick={onProjectClickHandler} className={classes.container}>
-      <h2 className={classes.header}>Project</h2>
       <h2>{props.name}</h2>
     </div>
   );

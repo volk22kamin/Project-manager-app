@@ -69,7 +69,7 @@ const AllProjectPage = (props) => {
           Add project
         </Button>
       )}
-      {myProjects.length && (
+      {myProjects.length > 0 ? (
         <div>
           <h2 className={classes.title}>My pojects:</h2>
           <BoxRow>
@@ -83,19 +83,23 @@ const AllProjectPage = (props) => {
             ))}
           </BoxRow>
         </div>
-      )}
+      ) : null}
 
-      <h2 className={classes.title}>All projects:</h2>
-      <BoxRow>
-        {allProjects.map((project, index) => (
-          <ProjectPreviewBox
-            key={index}
-            projectId={project.id}
-            name={project.name}
-            proj={project}
-          />
-        ))}
-      </BoxRow>
+      {allProjects.length > 0 ? (
+        <div>
+          <h2 className={classes.title}>All projects:</h2>
+          <BoxRow>
+            {allProjects.map((project, index) => (
+              <ProjectPreviewBox
+                key={index}
+                projectId={project.id}
+                name={project.name}
+                proj={project}
+              />
+            ))}
+          </BoxRow>
+        </div>
+      ) : null}
     </Fragment>
   );
 };

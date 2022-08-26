@@ -11,6 +11,12 @@ const Navbar = (props) => {
   const navigate = useNavigate();
   const context = useContext(AppContext);
 
+  console.log();
+  const options = [
+    { label: "hello", value: "hey" },
+    { label: "sya", value: "bye" },
+  ];
+
   const currentProject = context.currentProject;
 
   const onLogoClickHandler = () => {
@@ -28,6 +34,10 @@ const Navbar = (props) => {
     console.log("projects clicked");
 
     navigate("allProjects");
+  };
+
+  const onSearchHandler = (inputValue) => {
+    console.log(inputValue);
   };
 
   const logOut = () => {
@@ -50,7 +60,7 @@ const Navbar = (props) => {
           Projects
         </h2>
       )}
-      {props.loggedIn && <SearchBar />}
+      {props.loggedIn && <SearchBar onInput={onSearchHandler} />}
       {props.loggedIn && <ProfileModal logOut={logOut}>Profile</ProfileModal>}
     </div>
   );
