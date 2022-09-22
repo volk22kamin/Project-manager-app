@@ -11,18 +11,19 @@ const SearchBar = (props) => {
   };
 
   return (
-    <div className={classes.container}>
-      <form>
-        <label htmlFor="">
-          <input
-            className={classes.searchBar}
-            type="search"
-            placeholder="Search for a project"
-            onChange={searchInputHandler}
-            value={searchInput}
-          />
-        </label>
-      </form>
+    <div className="field has-addons">
+      <div className="control">
+        <input
+          className="input"
+          type="text"
+          placeholder="Find a Project"
+          onChange={searchInputHandler}
+          value={searchInput}
+        />
+      </div>
+      <div className="control">
+        <a className="button is-info">Search</a>
+      </div>
     </div>
   );
 };

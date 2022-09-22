@@ -5,6 +5,7 @@ import classes from "./Navbar.module.css";
 import logo from "../../logo.png";
 import SearchBar from "./searchBar/SearchBar";
 import { useNavigate } from "react-router-dom";
+import SearchSelect from "./searchSelect/SearchSelect";
 
 // gets props from app
 const Navbar = (props) => {
@@ -45,24 +46,45 @@ const Navbar = (props) => {
   };
 
   return (
-    <div className={classes.navbar}>
-      <div className={classes.logoContainer} onClick={onLogoClickHandler}>
-        <img src={logo} alt="" />
-        <h2 className={classes.logo}>Promger</h2>
+    <nav
+      className={`navbar ${classes.navbar}`}
+      role="navigation"
+      aria-label="main navigation"
+    >
+      <div
+        id="navbarBasicExample"
+        className={`navbar-menu ${classes.logoContainer}`}
+      >
+        <img src={logo} />
+        <div className="navbar-start">
+          <a className="navbar-item" onClick={onLogoClickHandler}>
+            Home
+          </a>
+
+          {props.loggedIn && (
+            <a className="navbar-item" onClick={onMyTaskClickHandler}>
+              My Tasks
+            </a>
+          )}
+          {props.loggedIn && (
+            <a className="navbar-item" onClick={onProjectsClickHandler}>
+              Projects
+            </a>
+          )}
+        </div>
+
+        <div className="navbar-end">
+          <div className="navbar-item">
+            {props.loggedIn && <SearchBar onInput={onSearchHandler} />}
+          </div>
+          <div className="navbar-item">
+            {props.loggedIn && (
+              <ProfileModal logOut={logOut}>Profile</ProfileModal>
+            )}
+          </div>
+        </div>
       </div>
-      {props.loggedIn && (
-        <h2 className={classes.myTasks} onClick={onMyTaskClickHandler}>
-          My tasks
-        </h2>
-      )}
-      {props.loggedIn && (
-        <h2 className={classes.projects} onClick={onProjectsClickHandler}>
-          Projects
-        </h2>
-      )}
-      {props.loggedIn && <SearchBar onInput={onSearchHandler} />}
-      {props.loggedIn && <ProfileModal logOut={logOut}>Profile</ProfileModal>}
-    </div>
+    </nav>
   );
 };
 

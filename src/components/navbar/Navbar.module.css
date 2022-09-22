@@ -1,7 +1,7 @@
 .navbar {
   display: flex;
   /* width: 100%; */
-  background-color: rgba(120, 188, 227, 0.864);
+  background-color: #81d4fa;
   justify-content: space-between;
   padding-left: 20px;
   padding-right: 20px;
@@ -20,4 +20,7 @@
 }
 .logoContainer img {
   height: 70px;
+}
+.navbar-item:hover {
+  background-color: ;
 }
