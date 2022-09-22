@@ -1,3 +1,5 @@
+@import "../../../index.css";
+
 .column {
   width: 22%;
   border: 1px solid rgba(128, 128, 128, 0.744);
@@ -6,7 +8,7 @@
 
 .header {
   /* width: 100%; */
-  background-color: #4ba3c7;
+  background-color: var(--dark);
   color: rgba(48, 46, 46, 0.778);
   border-top-left-radius: 7px;
   border-top-right-radius: 7px;
@@ -22,7 +24,7 @@
   cursor: pointer;
 }
 .column-body {
-  background-color: #b6ffff;
+  background-color: var(--light);
   min-height: 500px;
   max-height: 500px;
   display: flex;
