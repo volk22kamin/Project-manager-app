@@ -36,6 +36,7 @@ const AllProjectPage = (props) => {
   };
 
   const onCreateProjectHandler = async (event) => {
+    console.log("create");
     event.preventDefault();
     const project = await createProject(projectName);
     setAllProjects([...allProjects, project]);
@@ -63,10 +64,12 @@ const AllProjectPage = (props) => {
           </form>
         </Modal>
       )}
-      <Button style="margin" onClick={() => setOpenModal(true)}>
-        Add project
-      </Button>
-      {myProjects.length && (
+      {context.userLogged.isAdmin && (
+        <Button style="margin" onClick={() => setOpenModal(true)}>
+          Add project
+        </Button>
+      )}
+      {myProjects.length > 0 ? (
         <div>
           <h2 className={classes.title}>My pojects:</h2>
           <BoxRow>
@@ -80,19 +83,23 @@ const AllProjectPage = (props) => {
             ))}
           </BoxRow>
         </div>
-      )}
+      ) : null}
 
-      <h2 className={classes.title}>All projects:</h2>
-      <BoxRow>
-        {allProjects.map((project, index) => (
-          <ProjectPreviewBox
-            key={index}
-            projectId={project.id}
-            name={project.name}
-            proj={project}
-          />
-        ))}
-      </BoxRow>
+      {allProjects.length > 0 ? (
+        <div>
+          <h2 className={classes.title}>All projects:</h2>
+          <BoxRow>
+            {allProjects.map((project, index) => (
+              <ProjectPreviewBox
+                key={index}
+                projectId={project.id}
+                name={project.name}
+                proj={project}
+              />
+            ))}
+          </BoxRow>
+        </div>
+      ) : null}
     </Fragment>
   );
 };

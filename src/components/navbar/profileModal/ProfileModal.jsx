@@ -37,8 +37,6 @@ const ProfileModal = (props) => {
           logOut={logOut}
           onCloseProfile={onCloseProfileHandler}
           imageSrc={logo}
-          username={props.name}
-          email={props.email}
         />
       )}
     </div>

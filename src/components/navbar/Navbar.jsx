@@ -1,18 +1,30 @@
-import { useState } from "react";
-
+import { useState, useContext } from "react";
+import AppContext from "../../context/Context";
 import ProfileModal from "./profileModal/ProfileModal";
 import classes from "./Navbar.module.css";
 import logo from "../../logo.png";
 import SearchBar from "./searchBar/SearchBar";
 import { useNavigate } from "react-router-dom";
+import SearchSelect from "./searchSelect/SearchSelect";
 
 // gets props from app
 const Navbar = (props) => {
   const navigate = useNavigate();
+  const context = useContext(AppContext);
+
+  console.log();
+  const options = [
+    { label: "hello", value: "hey" },
+    { label: "sya", value: "bye" },
+  ];
+
+  const currentProject = context.currentProject;
 
   const onLogoClickHandler = () => {
-    console.log("logo clicked");
-    navigate("project_overview");
+    if (currentProject._id) {
+      console.log(currentProject);
+      navigate("project_overview");
+    }
   };
   const onMyTaskClickHandler = () => {
     console.log("myTask clicked");
@@ -21,7 +33,12 @@ const Navbar = (props) => {
 
   const onProjectsClickHandler = () => {
     console.log("projects clicked");
+
     navigate("allProjects");
+  };
+
+  const onSearchHandler = (inputValue) => {
+    console.log(inputValue);
   };
 
   const logOut = () => {
@@ -29,24 +46,54 @@ const Navbar = (props) => {
   };
 
   return (
-    <div className={classes.navbar}>
-      <div className={classes.logoContainer} onClick={onLogoClickHandler}>
-        <img src={logo} alt="" />
-        <h2 className={classes.logo}>Promger</h2>
+    <nav
+      className={`navbar ${classes.navbar}`}
+      role="navigation"
+      aria-label="main navigation"
+    >
+      <div
+        id="navbarBasicExample"
+        className={`navbar-menu ${classes.logoContainer}`}
+      >
+        <img src={logo} />
+        <div className="navbar-start">
+          <a
+            className="navbar-item has-text-white-ter	"
+            onClick={onLogoClickHandler}
+          >
+            Home
+          </a>
+
+          {props.loggedIn && (
+            <a
+              className="navbar-item has-text-white-ter	"
+              onClick={onMyTaskClickHandler}
+            >
+              My Tasks
+            </a>
+          )}
+          {props.loggedIn && (
+            <a
+              className="navbar-item has-text-white-ter	"
+              onClick={onProjectsClickHandler}
+            >
+              Projects
+            </a>
+          )}
+        </div>
+
+        <div className="navbar-end">
+          <div className="navbar-item has-text-white-ter	">
+            {props.loggedIn && <SearchBar onInput={onSearchHandler} />}
+          </div>
+          <div className="navbar-item has-text-white-ter	">
+            {props.loggedIn && (
+              <ProfileModal logOut={logOut}>Profile</ProfileModal>
+            )}
+          </div>
+        </div>
       </div>
-      {props.loggedIn && (
-        <h2 className={classes.myTasks} onClick={onMyTaskClickHandler}>
-          My tasks
-        </h2>
-      )}
-      {props.loggedIn && (
-        <h2 className={classes.projects} onClick={onProjectsClickHandler}>
-          Projects
-        </h2>
-      )}
-      {props.loggedIn && <SearchBar />}
-      {props.loggedIn && <ProfileModal logOut={logOut}>Profile</ProfileModal>}
-    </div>
+    </nav>
   );
 };
 

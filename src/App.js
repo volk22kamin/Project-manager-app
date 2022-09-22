@@ -38,7 +38,7 @@ function App() {
   };
 
   useEffect(() => {
-    loginOnToken();
+    loginOnToken(false);
   }, []);
 
   const onLogOutHandler = () => {

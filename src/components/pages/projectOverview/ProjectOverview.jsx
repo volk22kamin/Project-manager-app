@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
+import AppContext from "../../../context/Context";
 import { Fragment } from "react";
 import cloneDeep from "lodash.clonedeep";
-import AppContext from "../../../context/Context";
 
 import ProjectWrapper from "../../projectWrapper/ProjectWrapper";
 import InputModal from "../../InputModal/InputModal";
@@ -18,12 +18,12 @@ import {
   editUser,
   editUserByEmail,
 } from "../../../API/UserAPIcalls";
-import { updateProjectById } from "../../../API/ProjectAPIcalls";
+import {
+  updateProjectById,
+  removeAssigndUserFromTasks,
+} from "../../../API/ProjectAPIcalls";
 
 let taskToChange = {};
-
-// for now when deleting a user from a oroject
-// this does not affect the tasks assignd to him
 
 // when pressing promgr logo and theres no current project - crashes
 const ProjectOverview = () => {
@@ -110,9 +110,19 @@ const ProjectOverview = () => {
       (user) => user.email !== email
     );
     currentProject.users = filtered;
-    setUsers(filtered);
     updateProjectById(currentProject);
     removeProjectFromUser(email);
+    await removeUserFromTasks(email);
+    getTasksFromAPI(currentProject._id);
+    setUsers(filtered);
+  };
+
+  const removeUserFromTasks = async (userEmail) => {
+    try {
+      await removeAssigndUserFromTasks(userEmail, currentProject._id);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const removeProjectFromUser = async (email) => {

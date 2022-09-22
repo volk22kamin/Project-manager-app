@@ -3,8 +3,9 @@
   border-radius: 7px;
   margin-top: 10px;
   border: none;
-  background-color: #c1d1ee;
+  background-color: white;
   width: 95%;
+  min-height: 6rem;
   cursor: pointer;
 }
 .text {
