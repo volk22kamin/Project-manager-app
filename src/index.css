@@ -12,7 +12,9 @@ code {
     monospace;
 }
 :root {
-  --main: #81d4fa;
-  --light: #b6ffff;
-  --dark: #4ba3c7;
+  --dark: #3f334d;
+  --second-light: #574b60;
+  --second-dark: #574b60;
+  --main: #574b60;
+  --light: #eaf0ce;
 }

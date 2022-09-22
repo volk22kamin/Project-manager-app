@@ -57,27 +57,36 @@ const Navbar = (props) => {
       >
         <img src={logo} />
         <div className="navbar-start">
-          <a className="navbar-item" onClick={onLogoClickHandler}>
+          <a
+            className="navbar-item has-text-white-ter	"
+            onClick={onLogoClickHandler}
+          >
             Home
           </a>
 
           {props.loggedIn && (
-            <a className="navbar-item" onClick={onMyTaskClickHandler}>
+            <a
+              className="navbar-item has-text-white-ter	"
+              onClick={onMyTaskClickHandler}
+            >
               My Tasks
             </a>
           )}
           {props.loggedIn && (
-            <a className="navbar-item" onClick={onProjectsClickHandler}>
+            <a
+              className="navbar-item has-text-white-ter	"
+              onClick={onProjectsClickHandler}
+            >
               Projects
             </a>
           )}
         </div>
 
         <div className="navbar-end">
-          <div className="navbar-item">
+          <div className="navbar-item has-text-white-ter	">
             {props.loggedIn && <SearchBar onInput={onSearchHandler} />}
           </div>
-          <div className="navbar-item">
+          <div className="navbar-item has-text-white-ter	">
             {props.loggedIn && (
               <ProfileModal logOut={logOut}>Profile</ProfileModal>
             )}
