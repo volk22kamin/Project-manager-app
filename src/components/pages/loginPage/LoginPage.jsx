@@ -4,6 +4,8 @@ import classes from "./inputForm/InputForm.module.css";
 import { loginHandler, registerHandler } from "../../../API/UserAPIcalls";
 import { useState } from "react";
 
+import { GoogleLogin } from "react-google-login";
+
 import ErrorModal from "../../errorModal/ErrorModal";
 
 let errorMsg = "";
@@ -16,6 +18,17 @@ const LoginPage = (props) => {
     const response = await registerHandler(user);
     localStorage.setItem("token-promger", response.token);
     props.loginOnToken(response.isNew);
+  };
+
+  const clientId =
+    "567536629255-mqr6h5pkbr3olvugariv2ckpf32tfgif.apps.googleusercontent.com";
+
+  const onSuccess = (res) => {
+    console.log("success:", res);
+    props.googleLogin();
+  };
+  const onFailure = (err) => {
+    console.log("failed:", err);
   };
 
   const onLoginHandler = async (userDetails) => {
@@ -42,6 +55,16 @@ const LoginPage = (props) => {
           onCloseModal={onCloseModal}
         ></ErrorModal>
       ) : null}
+      <div className={classes.googleLogin}>
+        <GoogleLogin
+          clientId={clientId}
+          buttonText="Sign in with Google"
+          onSuccess={onSuccess}
+          onFailure={onFailure}
+          cookiePolicy={"single_host_origin"}
+          isSignedIn={true}
+        />
+      </div>
       <div className={classes.page}>
         <Card>
           <InputForm

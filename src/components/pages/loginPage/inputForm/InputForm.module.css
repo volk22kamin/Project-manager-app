@@ -49,3 +49,7 @@ input {
   height: 550px;
   border: 1px solid #8e8585;
 }
+.googleLogin {
+  display: grid;
+  justify-content: center;
+}

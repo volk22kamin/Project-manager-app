@@ -2,6 +2,8 @@
   margin-left: 15px;
 }
 .container {
+  min-height: 7rem;
+  font-size: larger;
   background-color: whitesmoke;
   border: 1px solid pink;
   border-radius: 7px;
