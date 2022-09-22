@@ -21,7 +21,7 @@
   animation: slide-down 300ms ease-out forwards;
 }
 .content {
-  height: 12rem;
+  min-height: 12rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
