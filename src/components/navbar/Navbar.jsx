@@ -1,44 +1,55 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import AppContext from "../../context/Context";
 import ProfileModal from "./profileModal/ProfileModal";
 import classes from "./Navbar.module.css";
 import logo from "../../logo.png";
 import SearchBar from "./searchBar/SearchBar";
 import { useNavigate } from "react-router-dom";
-import SearchSelect from "./searchSelect/SearchSelect";
+import { getProjectsByUser } from "../../API/ProjectAPIcalls";
+import Swal from "sweetalert2";
 
 // gets props from app
 const Navbar = (props) => {
   const navigate = useNavigate();
   const context = useContext(AppContext);
-
-  console.log();
-  const options = [
-    { label: "hello", value: "hey" },
-    { label: "sya", value: "bye" },
-  ];
-
   const currentProject = context.currentProject;
 
   const onLogoClickHandler = () => {
     if (currentProject._id) {
-      console.log(currentProject);
       navigate("project_overview");
     }
   };
+
   const onMyTaskClickHandler = () => {
-    console.log("myTask clicked");
     navigate("myTasks");
   };
 
   const onProjectsClickHandler = () => {
-    console.log("projects clicked");
-
     navigate("allProjects");
   };
 
-  const onSearchHandler = (inputValue) => {
-    console.log(inputValue);
+  const projectByUser = async () => {
+    return await getProjectsByUser(context.userLogged);
+  };
+
+  const onSearchHandler = async (inputValue) => {
+    const projects = await projectByUser();
+
+    const currentFound = projects.find(
+      (project) => project.name === inputValue
+    );
+
+    context.currentProject = currentFound ? currentFound : null;
+
+    if (context.currentProject) {
+      navigate("/project_overview");
+    } else {
+      Swal.fire({
+        icon: "error",
+        text: "no project with this name",
+        timer: 750,
+      });
+    }
   };
 
   const logOut = () => {

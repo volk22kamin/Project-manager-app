@@ -10,7 +10,7 @@ const ProfilePageWrap = (props) => {
     <div>
       <div className={classes.overlay} onClick={handler}></div>
       <div className={classes.pointer}></div>
-      <div className={classes.wrapBox}>{props.children}</div>;
+      <div className={classes.wrapBox}>{props.children}</div>
     </div>
   );
 };
