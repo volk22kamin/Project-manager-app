@@ -7,7 +7,11 @@ const SearchBar = (props) => {
   const searchInputHandler = (event) => {
     event.preventDefault();
     setSearchInput(event.target.value);
-    props.onInput(event.target.value);
+  };
+
+  const search = (e) => {
+    e.preventDefault();
+    props.onInput(searchInput);
   };
 
   return (
@@ -22,7 +26,9 @@ const SearchBar = (props) => {
         />
       </div>
       <div className="control">
-        <a className="button is-info">Search</a>
+        <a onClick={search} className="button is-info">
+          Search
+        </a>
       </div>
     </div>
   );
