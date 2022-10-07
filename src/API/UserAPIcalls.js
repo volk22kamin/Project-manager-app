@@ -30,8 +30,22 @@ export const registerHandler = async (user) => {
 };
 
 export const verifyToken = async (token) => {
+  console.log(token);
   try {
     const res = axios.get(APIaddress + "/users/tokenLogin", {
+      headers: { "x-api-key": token },
+    });
+    return await res;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+export const verifyTokenWithGoogle = async (token) => {
+  console.log(token);
+  try {
+    const res = axios.get(APIaddress + "/googleUsers/tokenLogin", {
       headers: { "x-api-key": token },
     });
     return await res;
@@ -78,4 +92,11 @@ export const editUserByEmail = async (user) => {
   } catch (error) {
     return error;
   }
+};
+
+export const signInWithGoogle = async (user) => {
+  const res = await axios.post(APIaddress + "/googleUsers/login", { user });
+
+  console.log(res.data);
+  return res.data;
 };

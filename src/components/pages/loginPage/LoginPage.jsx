@@ -1,8 +1,14 @@
 import Card from "../../card/Card";
 import InputForm from "./inputForm/InputForm";
 import classes from "./inputForm/InputForm.module.css";
-import { loginHandler, registerHandler } from "../../../API/UserAPIcalls";
+import {
+  loginHandler,
+  registerHandler,
+  signInWithGoogle,
+} from "../../../API/UserAPIcalls";
 import { useState } from "react";
+
+import { GoogleLogin } from "react-google-login";
 
 import ErrorModal from "../../errorModal/ErrorModal";
 
@@ -23,7 +29,7 @@ const LoginPage = (props) => {
     const data = response.data.data;
     if (response.data.status === "ok") {
       localStorage.setItem("token-promger", data);
-      props.loginOnToken(response.isNew);
+      props.loginOnToken(response.isNew, "local");
     } else if (response.data.status === "error") {
       errorMsg = data;
       setModalOpen(true);
@@ -34,6 +40,27 @@ const LoginPage = (props) => {
     setModalOpen(false);
   };
 
+  const clientId = process.env.REACT_APP_CLIENT_ID;
+
+  const onSuccess = async (res) => {
+    const user = {
+      name: res.profileObj.name,
+      googleId: res.profileObj.googleId,
+      email: res.profileObj.email,
+    };
+
+    const response = await signInWithGoogle(user);
+
+    if (response.status === "ok") {
+      localStorage.setItem("token-promger", response.data);
+      props.loginOnToken(response.isNew, "google");
+    }
+  };
+
+  const onFailure = (err) => {
+    console.log("failed:", err);
+  };
+
   return (
     <div>
       {modalOpen ? (
@@ -42,6 +69,14 @@ const LoginPage = (props) => {
           onCloseModal={onCloseModal}
         ></ErrorModal>
       ) : null}
+      <GoogleLogin
+        clientId={clientId}
+        buttonText="Sign in with Google"
+        onSuccess={onSuccess}
+        onFailure={onFailure}
+        cookiePolicy={"single_host_origin"}
+        isSignedIn={true}
+      />
       <div className={classes.page}>
         <Card>
           <InputForm

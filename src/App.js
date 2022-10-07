@@ -1,6 +1,10 @@
 import { useEffect, useState, Fragment, useContext } from "react";
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
-import { verifyToken, getAllEmails } from "./API/UserAPIcalls";
+import {
+  verifyToken,
+  getAllEmails,
+  verifyTokenWithGoogle,
+} from "./API/UserAPIcalls";
 import AppContext from "./context/Context";
 
 import LoginPage from "./components/pages/loginPage/LoginPage";
@@ -12,6 +16,8 @@ import WelcomePage from "./components/pages/welcomePage/WelcomePage";
 import MyTasksPage from "./components/pages/myTasksPage/MyTasksPage";
 import AllProjectPage from "./components/pages/allProjectsPage/AllProjectsPage";
 
+import { gapi } from "gapi-script";
+
 let userInfo = {};
 
 function App() {
@@ -19,11 +25,32 @@ function App() {
   const context = useContext(AppContext);
   const [isLoggedIn, setIsLoggenIn] = useState(false);
 
-  const loginOnToken = async (isNew) => {
+  const clientId = process.env.REACT_APP_CLIENT_ID;
+
+  // useEffect(() => {
+  //   const initClient = () => {
+  //     gapi.client.init({
+  //       clientId: clientId,
+  //       scope: "",
+  //     });
+  //   };
+  //   gapi.load("client:auth2", initClient);
+  // });
+
+  const loginOnToken = async (isNew, userType) => {
     const token = localStorage.getItem("token-promger");
     if (token) {
-      const response = await verifyToken(token);
+      let response;
+
+      if (userType === "local") {
+        response = await verifyToken(token);
+      } else if (userType === "google") {
+        response = await verifyTokenWithGoogle(token);
+      }
+
+      console.log(response);
       userInfo = response.data;
+      console.log(userInfo);
       userInfo.isNew = isNew;
       setIsLoggenIn(true);
       context.userLogged = userInfo;
