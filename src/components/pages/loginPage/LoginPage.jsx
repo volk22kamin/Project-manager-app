@@ -21,7 +21,7 @@ const LoginPage = (props) => {
     // add error handling
     const response = await registerHandler(user);
     localStorage.setItem("token-promger", response.token);
-    props.loginOnToken(response.isNew);
+    props.loginOnToken(response.isNew, "local");
   };
 
   const onLoginHandler = async (userDetails) => {
@@ -43,6 +43,7 @@ const LoginPage = (props) => {
   const clientId = process.env.REACT_APP_CLIENT_ID;
 
   const onSuccess = async (res) => {
+    console.log("succes");
     const user = {
       name: res.profileObj.name,
       googleId: res.profileObj.googleId,
@@ -51,10 +52,8 @@ const LoginPage = (props) => {
 
     const response = await signInWithGoogle(user);
 
-    if (response.status === "ok") {
-      localStorage.setItem("token-promger", response.data);
-      props.loginOnToken(response.isNew, "google");
-    }
+    localStorage.setItem("token-promger", response.data);
+    props.loginOnToken(response.isNew, "google");
   };
 
   const onFailure = (err) => {

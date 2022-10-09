@@ -43,7 +43,6 @@ export const verifyToken = async (token) => {
 };
 
 export const verifyTokenWithGoogle = async (token) => {
-  console.log(token);
   try {
     const res = axios.get(APIaddress + "/googleUsers/tokenLogin", {
       headers: { "x-api-key": token },
@@ -97,6 +96,6 @@ export const editUserByEmail = async (user) => {
 export const signInWithGoogle = async (user) => {
   const res = await axios.post(APIaddress + "/googleUsers/login", { user });
 
-  console.log(res.data);
+  console.log(res);
   return res.data;
 };

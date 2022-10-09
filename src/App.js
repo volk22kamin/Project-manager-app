@@ -1,5 +1,5 @@
 import { useEffect, useState, Fragment, useContext } from "react";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import {
   verifyToken,
   getAllEmails,
@@ -15,7 +15,6 @@ import "./App.css";
 import WelcomePage from "./components/pages/welcomePage/WelcomePage";
 import MyTasksPage from "./components/pages/myTasksPage/MyTasksPage";
 import AllProjectPage from "./components/pages/allProjectsPage/AllProjectsPage";
-
 import { gapi } from "gapi-script";
 
 let userInfo = {};
@@ -27,33 +26,32 @@ function App() {
 
   const clientId = process.env.REACT_APP_CLIENT_ID;
 
-  // useEffect(() => {
-  //   const initClient = () => {
-  //     gapi.client.init({
-  //       clientId: clientId,
-  //       scope: "",
-  //     });
-  //   };
-  //   gapi.load("client:auth2", initClient);
-  // });
+  useEffect(() => {
+    const initClient = () => {
+      gapi.auth2.init({ clientId: clientId });
+      gapi.load("client:auth2", initClient);
+    };
+  });
 
   const loginOnToken = async (isNew, userType) => {
     const token = localStorage.getItem("token-promger");
+
     if (token) {
       let response;
 
-      if (userType === "local") {
-        response = await verifyToken(token);
-      } else if (userType === "google") {
+      if (userType === "google") {
         response = await verifyTokenWithGoogle(token);
+      } else if (userType === "local") {
+        response = await verifyToken(token);
+      } else {
+        return;
       }
 
-      console.log(response);
       userInfo = response.data;
-      console.log(userInfo);
       userInfo.isNew = isNew;
       setIsLoggenIn(true);
       context.userLogged = userInfo;
+      console.log(context.userLogged);
       navigate("welcome");
       const timer = setTimeout(() => {
         navigate("allProjects");
@@ -65,7 +63,7 @@ function App() {
   };
 
   useEffect(() => {
-    loginOnToken(false);
+    loginOnToken(false, "");
   }, []);
 
   const onLogOutHandler = () => {
