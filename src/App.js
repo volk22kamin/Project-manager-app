@@ -26,13 +26,6 @@ function App() {
 
   const clientId = process.env.REACT_APP_CLIENT_ID;
 
-  useEffect(() => {
-    const initClient = () => {
-      gapi.auth2.init({ clientId: clientId });
-      gapi.load("client:auth2", initClient);
-    };
-  });
-
   const loginOnToken = async (isNew, userType) => {
     const token = localStorage.getItem("token-promger");
 
@@ -41,17 +34,14 @@ function App() {
 
       if (userType === "google") {
         response = await verifyTokenWithGoogle(token);
-      } else if (userType === "local") {
-        response = await verifyToken(token);
       } else {
-        return;
+        response = await verifyToken(token);
       }
 
       userInfo = response.data;
       userInfo.isNew = isNew;
       setIsLoggenIn(true);
       context.userLogged = userInfo;
-      console.log(context.userLogged);
       navigate("welcome");
       const timer = setTimeout(() => {
         navigate("allProjects");
@@ -63,10 +53,15 @@ function App() {
   };
 
   useEffect(() => {
+    const initClient = () => {
+      gapi.auth2.init({ clientId: clientId });
+      gapi.load("client:auth2", initClient);
+    };
     loginOnToken(false, "");
   }, []);
 
   const onLogOutHandler = () => {
+    console.log("logging out");
     localStorage.removeItem("token-promger");
     setIsLoggenIn(false);
     navigate("/");
@@ -78,7 +73,9 @@ function App() {
 
   const saveAllEmails = async () => {
     context.userEmails = await getAllEmails();
+    console.log(context);
   };
+
   if (isLoggedIn) {
     saveAllEmails();
   }

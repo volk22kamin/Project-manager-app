@@ -43,7 +43,6 @@ const LoginPage = (props) => {
   const clientId = process.env.REACT_APP_CLIENT_ID;
 
   const onSuccess = async (res) => {
-    console.log("succes");
     const user = {
       name: res.profileObj.name,
       googleId: res.profileObj.googleId,
@@ -74,7 +73,7 @@ const LoginPage = (props) => {
         onSuccess={onSuccess}
         onFailure={onFailure}
         cookiePolicy={"single_host_origin"}
-        isSignedIn={true}
+        isSignedIn={false}
       />
       <div className={classes.page}>
         <Card>

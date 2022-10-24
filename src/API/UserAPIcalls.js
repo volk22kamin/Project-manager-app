@@ -57,7 +57,14 @@ export const verifyTokenWithGoogle = async (token) => {
 export const getAllEmails = async () => {
   try {
     const res = axios.get(APIaddress + "/users/emails");
-    return (await res).data;
+
+    let users = (await res).data;
+    const googleRes = axios.get(APIaddress + "/googleUsers/emails");
+    const googleUsers = (await googleRes).data;
+    users = [...users, ...googleUsers];
+
+    console.log(users);
+    return users;
   } catch (error) {
     return error;
   }
@@ -96,6 +103,5 @@ export const editUserByEmail = async (user) => {
 export const signInWithGoogle = async (user) => {
   const res = await axios.post(APIaddress + "/googleUsers/login", { user });
 
-  console.log(res);
   return res.data;
 };
