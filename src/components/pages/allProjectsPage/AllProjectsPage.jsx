@@ -36,7 +36,6 @@ const AllProjectPage = (props) => {
   };
 
   const onCreateProjectHandler = async (event) => {
-    console.log("create");
     event.preventDefault();
     const project = await createProject(projectName);
     setAllProjects([...allProjects, project]);

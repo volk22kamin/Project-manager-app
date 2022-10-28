@@ -40,7 +40,7 @@ export const updateProjectById = async (project) => {
 
 export const createProject = async (name) => {
   const res = axios.post(APIaddress + "/projects", { name: name });
-  console.log(await res);
+
   return (await res).data;
   // add try catch and return later
 };

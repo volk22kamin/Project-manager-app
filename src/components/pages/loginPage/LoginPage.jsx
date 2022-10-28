@@ -1,18 +1,24 @@
 import Card from "../../card/Card";
 import InputForm from "./inputForm/InputForm";
 import classes from "./inputForm/InputForm.module.css";
-import { loginHandler, registerHandler } from "../../../API/UserAPIcalls";
+import Swal from "sweetalert2";
+
+import {
+  loginHandler,
+  registerHandler,
+  signInWithGoogle,
+} from "../../../API/UserAPIcalls";
 import { useState } from "react";
+
+import { GoogleLogin } from "react-google-login";
 
 import ErrorModal from "../../errorModal/ErrorModal";
 
 let errorMsg = "";
 // gets props from app
 const LoginPage = (props) => {
-  const [modalOpen, setModalOpen] = useState(false);
-
   const onRegisterHandler = async (user) => {
-    // add error handling
+    user.type = "local";
     const response = await registerHandler(user);
     localStorage.setItem("token-promger", response.token);
     props.loginOnToken(response.isNew);
@@ -25,23 +31,49 @@ const LoginPage = (props) => {
       localStorage.setItem("token-promger", data);
       props.loginOnToken(response.isNew);
     } else if (response.data.status === "error") {
-      errorMsg = data;
-      setModalOpen(true);
+      Swal.fire({
+        icon: "error",
+        text: data,
+        timer: 900,
+      });
     }
   };
 
-  const onCloseModal = () => {
-    setModalOpen(false);
+  const clientId = process.env.REACT_APP_CLIENT_ID;
+
+  const onSuccess = async (res) => {
+    const user = {
+      name: res.profileObj.name,
+      googleId: res.profileObj.googleId,
+      email: res.profileObj.email,
+      type: "other",
+    };
+
+    const response = await registerHandler(user);
+
+    if (response.status === "registered") {
+      localStorage.setItem("token-promger", response.token);
+      props.loginOnToken(response.isNew);
+    } else if (response.response.status === 401) {
+      localStorage.setItem("token-promger", response.response.data.token);
+      props.loginOnToken(response.response.isNew);
+    }
+  };
+
+  const onFailure = (err) => {
+    console.log("failed:", err);
   };
 
   return (
     <div>
-      {modalOpen ? (
-        <ErrorModal
-          errorMsg={errorMsg}
-          onCloseModal={onCloseModal}
-        ></ErrorModal>
-      ) : null}
+      <GoogleLogin
+        clientId={clientId}
+        buttonText="Sign in with Google"
+        onSuccess={onSuccess}
+        onFailure={onFailure}
+        cookiePolicy={"single_host_origin"}
+        isSignedIn={false}
+      />
       <div className={classes.page}>
         <Card>
           <InputForm

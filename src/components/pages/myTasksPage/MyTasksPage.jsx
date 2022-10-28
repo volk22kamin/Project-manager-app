@@ -32,7 +32,6 @@ const MyTasksPage = (props) => {
     getUsersTasks(email);
   }, []);
 
-  console.log(projects);
   return (
     <Fragment>
       <h2 className={classes.title}>my tasks </h2>

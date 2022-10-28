@@ -16,7 +16,9 @@ const TaskColumn = (props) => {
           ? `${props.header} ${props.tasks.length} issues`
           : props.header}
         {props.header === "To do" && (
-          <button onClick={createIssueHandler}>+</button>
+          <button className={classes.addIssueBtn} onClick={createIssueHandler}>
+            +
+          </button>
         )}
       </header>
       <div className={classes["column-body"]}>
