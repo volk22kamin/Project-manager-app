@@ -16,13 +16,15 @@ export const loginHandler = async (userDetails) => {
 
 export const registerHandler = async (user) => {
   try {
-    const res = axios.post(APIaddress + "/users/register", user);
-    // console.log(await res);
-    return {
-      isNew: (await res).data.isNew,
-      status: (await res).data.status,
-      token: await (await res).data.data,
+    const res = await axios.post(APIaddress + "/users/register", user);
+
+    const ret = {
+      isNew: res.data.isNew,
+      status: res.data.status,
+      token: res.data.data,
     };
+
+    return ret;
   } catch (error) {
     console.log(error);
     return error;
@@ -30,7 +32,6 @@ export const registerHandler = async (user) => {
 };
 
 export const verifyToken = async (token) => {
-  console.log(token);
   try {
     const res = axios.get(APIaddress + "/users/tokenLogin", {
       headers: { "x-api-key": token },
@@ -63,7 +64,6 @@ export const getAllEmails = async () => {
     const googleUsers = (await googleRes).data;
     users = [...users, ...googleUsers];
 
-    console.log(users);
     return users;
   } catch (error) {
     return error;
@@ -90,7 +90,6 @@ export const editUser = async (user) => {
 };
 
 export const editUserByEmail = async (user) => {
-  console.log(user.email);
   try {
     const res = await axios.put(APIaddress + "/users/one/" + user.email);
 

@@ -26,17 +26,12 @@ function App() {
 
   const clientId = process.env.REACT_APP_CLIENT_ID;
 
-  const loginOnToken = async (isNew, userType) => {
+  const loginOnToken = async (isNew) => {
     const token = localStorage.getItem("token-promger");
+    console.log("log in on token");
 
     if (token) {
-      let response;
-
-      if (userType === "google") {
-        response = await verifyTokenWithGoogle(token);
-      } else {
-        response = await verifyToken(token);
-      }
+      const response = await verifyToken(token);
 
       userInfo = response.data;
       userInfo.isNew = isNew;
@@ -73,7 +68,6 @@ function App() {
 
   const saveAllEmails = async () => {
     context.userEmails = await getAllEmails();
-    console.log(context);
   };
 
   if (isLoggedIn) {
