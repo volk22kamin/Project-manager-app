@@ -15,10 +15,10 @@ const SearchBar = (props) => {
   };
 
   return (
-    <div className="field has-addons">
-      <div className="control">
+    <div className={classes.container}>
+      <div className="{classes.searchBar}">
         <input
-          className="input"
+          className={classes.searchBar}
           type="text"
           placeholder="Find a Project"
           onChange={searchInputHandler}
@@ -26,7 +26,7 @@ const SearchBar = (props) => {
         />
       </div>
       <div className="control">
-        <a onClick={search} className="button is-info">
+        <a onClick={search} className={classes.searchBtn}>
           Search
         </a>
       </div>
